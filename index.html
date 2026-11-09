@@ -1,4 +1,4 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -73,6 +73,23 @@ svg text{fill:var(--muted);font:11px "IBM Plex Sans",sans-serif}
 footer{margin-top:20px;font-size:.8rem;color:var(--muted)}
 a{color:var(--accent2)}
 [hidden]{display:none!important}
+header{background:linear-gradient(90deg,#0a1824,#12425e)}
+input[type=text]{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.hero{background:linear-gradient(120deg,#0a1824,#12425e 70%,#1d6f9a);color:#fff;border-radius:10px;padding:28px 22px;margin-bottom:16px}
+.hero h2{font-size:clamp(1.4rem,4vw,2.1rem);border:0;padding:0;margin:12px 0;line-height:1.2;max-width:26ch;color:#fff}
+.hero p{max-width:62ch;opacity:.85;margin:0 0 16px}
+.badge{display:inline-block;font-size:.75rem;padding:3px 10px;border:1px solid rgba(255,255,255,.35);border-radius:12px}
+.hero button{margin:0 8px 8px 0;color:#fff;border-color:rgba(255,255,255,.5)}
+.hero button.pri{background:var(--accent2);border-color:var(--accent2)}
+.kpis,.mods{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent2);border-radius:6px;padding:14px}
+.kpi b{display:block;font-size:1.9rem;font-weight:600;line-height:1.1}
+.kpi span{font-size:.8rem;color:var(--muted)}
+.mod{margin:0;display:block;width:100%;text-align:left;font-weight:400;background:var(--surface);padding:16px}
+.mod:hover{border-color:var(--accent2)}
+.mod b{display:block;margin-bottom:4px;font-weight:600}
+.mod span{font-size:.84rem;color:var(--muted)}
+.steps{margin:0;padding-left:20px;font-size:.9rem}.steps li{margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -80,17 +97,62 @@ a{color:var(--accent2)}
 <h1>Score de complicaciones en dengue pediátrico</h1>
 <p>Bhaskar M, et al. F1000Research 2022, 11:446</p>
 <div class="tabs" role="tablist">
-  <button role="tab" aria-selected="true" data-t="calc">Calculadora</button>
+  <button role="tab" aria-selected="true" data-t="inicio">Inicio</button>
+  <button role="tab" aria-selected="false" data-t="eda">Datos y EDA</button>
+  <button role="tab" aria-selected="false" data-t="est">Modelo y métricas</button>
+  <button role="tab" aria-selected="false" data-t="calc">Calculadora</button>
   <button role="tab" aria-selected="false" data-t="lote">Predicción por lotes</button>
-  <button role="tab" aria-selected="false" data-t="est">Datos del estudio</button>
 </div>
 </div></header>
 <main>
 
-<section id="calc">
+<section id="inicio">
+<div class="hero">
+  <span class="badge">Cohorte de 303 niños · Validación interna</span>
+  <h2>Riesgo de complicaciones en dengue pediátrico</h2>
+  <p>Score de 5 indicadores (0 a 7) basado en Bhaskar et al., F1000Research 2022. Calcula el riesgo de un paciente, procesa lotes de pacientes en Excel y explora los datos del estudio.</p>
+  <button class="pri" data-go="calc">Abrir calculadora</button><button data-go="lote">Predicción por lotes</button>
+</div>
+<div class="kpis">
+  <div class="kpi"><b>303</b><span>Pacientes (63 con dengue complicado, 4 muertes)</span></div>
+  <div class="kpi"><b>0,86</b><span>AUC (IC 95 %: 0,80 a 0,92)</span></div>
+  <div class="kpi"><b>84,1 %</b><span>Sensibilidad con umbral ≥ 2</span></div>
+  <div class="kpi"><b>94,5 %</b><span>Valor predictivo negativo</span></div>
+</div>
+<div class="mods">
+  <button class="mod card" data-go="eda"><b>Datos y EDA</b><span>Preparación de la base y comparación entre grupos, calculada con los datos reales.</span></button>
+  <button class="mod card" data-go="est"><b>Modelo y métricas</b><span>Curva ROC, umbrales, odds ratios y distribución del puntaje.</span></button>
+  <button class="mod card" data-go="calc"><b>Calculadora individual</b><span>Puntaje y riesgo observado en la cohorte para un paciente.</span></button>
+  <button class="mod card" data-go="lote"><b>Predicción por lotes</b><span>Carga Excel o CSV, obtén métricas y exporta resultados en XLSX.</span></button>
+</div>
+<p class="note">Alcance: el score usa solo hematocrito, plaquetas, leucocitos, ALT e hipotensión. El estudio fue de un solo centro y con validación interna. Es una herramienta informativa que no sustituye el juicio clínico.</p>
+</section>
+
+<section id="eda" hidden>
+<div class="card"><h2>Preparación de los datos</h2>
+  <div class="facts" id="efacts"></div>
+  <ol class="steps" style="margin-top:14px">
+    <li>Se tomaron del Excel del estudio las 5 variables del score y el grupo (OMS).</li>
+    <li>Se codificó el resultado como 1 = complicado y 0 = sin complicaciones.</li>
+    <li>La presión arterial viene codificada al revés que en el README. Solo con 2 = hipotensión coinciden los 38 casos del artículo, y así se recodificó a 0/1.</li>
+    <li>A un paciente le falta la ALT. No suma puntos, igual que en el análisis del artículo.</li>
+    <li>Se aplicaron los puntos de corte del artículo (hematocrito 42, plaquetas 75 000, leucocitos 7 000, ALT 70).</li>
+  </ol>
+</div>
+<div class="grid eq">
+  <div class="card"><h2>Pacientes por grupo</h2><svg id="egrp" viewBox="0 0 340 130" width="100%" role="img" aria-label="Pacientes por grupo"></svg></div>
+  <div class="card"><h2>Comparación entre grupos</h2>
+    <div class="scroll"><table style="min-width:360px"><thead><tr><th>Variable</th><th>Sin complicaciones</th><th>Complicado</th></tr></thead><tbody id="ecmp"></tbody></table></div>
+    <p class="note" style="margin:10px 0 0">Mediana (percentil 25 a 75).</p>
+  </div>
+</div>
+</section>
+
+<section id="calc" hidden>
 <div class="grid two">
   <div class="card">
     <h2>Datos del paciente</h2>
+    <div class="maps" style="margin-bottom:16px"><div><label for="pn">Nombre (opcional)</label><input id="pn" type="text" autocomplete="off"></div><div><label for="ph">Historia clínica (opcional)</label><input id="ph" type="text" autocomplete="off"></div><div><label for="pa">Edad en años (opcional)</label><input id="pa" type="number" min="0" max="18"></div></div>
     <div class="field"><label for="pcv">Hematocrito (%)</label><span class="tag">≥ 42 · +1</span><input id="pcv" type="number" inputmode="decimal" min="0" max="80" step="0.1"></div>
     <div class="field"><label for="plt">Plaquetas (células/mm³)</label><span class="tag">≤ 75 000 · +1</span><input id="plt" type="number" inputmode="numeric" min="0" step="1000"></div>
     <div class="field"><label for="wbc">Leucocitos más altos (células/mm³)</label><span class="tag">≥ 7 000 · +1</span><input id="wbc" type="number" inputmode="numeric" min="0" step="100"></div>
@@ -100,10 +162,12 @@ a{color:var(--accent2)}
   </div>
   <div class="card" aria-live="polite">
     <h2>Resultado</h2>
+    <p class="note" id="who" style="margin:-4px 0 8px"></p>
     <div class="score"><b id="score">0</b><span>de 7</span></div>
     <div class="bar" id="bar"></div>
     <div class="mark"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
     <div class="verdict" id="verdict"><strong id="vt"></strong><span id="vd"></span></div>
+    <p class="note" id="obs" style="margin:12px 0 0"></p>
     <ul class="parts" id="parts"></ul>
     <p class="warn" id="warn"></p>
   </div>
@@ -116,6 +180,7 @@ a{color:var(--accent2)}
   <p class="note">Carga un archivo CSV o Excel con una fila por paciente, o usa los datos del estudio. Si incluyes el resultado real, se calculan sensibilidad, especificidad, valores predictivos y AUC.</p>
   <input id="file" type="file" accept=".csv,.tsv,.txt,.xlsx,.xls">
   <button id="demo" type="button">Usar datos del estudio (303 niños)</button>
+  <button id="tpl" type="button">Descargar plantilla Excel</button>
   <div id="mapbox" hidden>
     <h3>Asignación de columnas</h3>
     <div class="maps" id="maps"></div>
@@ -138,6 +203,7 @@ a{color:var(--accent2)}
     <p class="note" id="lnote"></p>
     <div class="scroll"><table style="min-width:620px"><thead id="lhead"></thead><tbody id="lbody"></tbody></table></div>
     <button id="dl" type="button">Descargar resultados (CSV)</button>
+    <button id="dlx" type="button">Exportar resultados (XLSX)</button>
   </div>
 </div>
 </section>
@@ -174,310 +240,7 @@ a{color:var(--accent2)}
 
 <script>
 (function(){
-var DATA=`complicado,hematocrito,plaquetas,leucocitos_max,alt,hipotension
-1,46,30000,5100,53,1
-1,38.6,43000,5300,21,0
-0,35.5,129000,2600,12,0
-0,42.1,70000,4800,171,0
-0,41,184000,9100,45,0
-1,33.4,103000,2400,291,1
-0,39.6,158000,3000,18,0
-0,41.2,71000,4100,20,0
-0,42.4,59000,9100,11,0
-0,34.6,115000,4000,16,0
-0,37.4,130000,2000,21,0
-0,37.5,94000,3600,17,0
-0,45.7,87000,11400,145,1
-0,39,108000,5900,12,0
-1,41.9,104000,2600,34,0
-1,41.4,68000,6440,22.5,1
-0,36,104000,3600,31,0
-0,46,197000,2900,22,0
-1,41.1,23000,6300,118,1
-0,37.1,166000,7800,13,0
-0,39.8,72000,8400,30,0
-1,44.9,46000,7100,23,0
-0,36.8,190000,9100,13,0
-0,39.6,77000,6500,11,0
-1,36.5,31000,5700,87,1
-0,39.9,125000,5100,16,0
-0,41,110000,3100,20,0
-0,41.7,67000,9600,52,0
-0,39.7,174000,5900,19,0
-1,47.8,114000,3100,98,1
-0,40.7,78000,2000,18,0
-0,43.2,53000,6900,159,0
-0,40.1,64000,1700,114,0
-0,40.8,69000,5100,17,0
-0,41.6,40000,4600,35,0
-0,40.5,109000,3200,17,1
-0,49.2,84000,5000,14,0
-0,40.2,115000,6600,72,0
-0,39.8,119000,6600,31,0
-0,38.7,98000,12000,19,0
-0,39,67000,4800,24,1
-1,40.9,37000,7700,179,0
-0,39.2,95000,4100,29,0
-1,51.3,22000,9900,168,0
-1,38,88000,4000,9,0
-1,44.4,52000,7440,70,1
-0,42,63000,3800,13,0
-1,41.6,34000,10500,145,0
-0,38.2,86000,2700,20,0
-0,39.9,240000,4800,40,0
-0,40.5,54000,6400,21,0
-0,40.5,46000,3600,143,0
-0,38.2,44000,7200,11,0
-0,38.6,172000,3900,35,0
-0,37.4,156000,3500,112,0
-0,38.2,57000,1900,10,0
-0,41,72000,7100,28,0
-0,39,73000,10700,47,0
-0,42.7,112000,2200,124,0
-1,43.7,85000,6100,34,0
-0,36.6,98000,2700,23,0
-0,36.4,86000,6300,12,0
-1,45.7,153000,8500,12,1
-1,29.9,160000,5600,15,0
-0,38.9,93000,5800,13,0
-1,37.9,20000,5100,113,1
-0,40.3,144000,2900,32,0
-0,38.8,172000,2900,11,0
-0,37.6,146000,4500,24,0
-0,38.3,127000,2900,22,0
-0,36.4,55000,11800,20,0
-0,34.2,67000,4200,25,0
-0,42,152000,3800,14,0
-0,36.8,176000,3800,25,0
-1,52.1,13000,4500,41,1
-1,46.5,40000,2600,24,0
-0,43.6,177000,2900,15,0
-0,48,35000,3800,40,0
-0,38.3,94000,8300,38,0
-1,38.9,89000,7400,20,0
-0,40.7,88000,4000,263,0
-0,40.7,195000,5300,49,0
-1,45.3,15000,5000,77,0
-0,41.3,86000,6600,161,0
-0,33.1,100000,3900,40,0
-1,51.1,17000,4000,130,0
-1,44.4,44000,7900,151,0
-0,41.7,142000,4900,15,1
-1,46.3,26000,9000,331,1
-0,36.3,90000,5700,40,0
-0,39.5,127000,3400,35,0
-0,36.6,70000,3000,25,1
-0,39.9,91000,5200,33,0
-0,34.4,248000,6200,18,0
-0,43,80000,3600,121,0
-0,44.2,159000,6100,51,0
-0,37,87000,4900,30,0
-0,39.9,76000,8100,15,1
-0,41.4,56000,6300,45,0
-0,37.3,177000,9000,11,0
-0,38.7,16000,1800,53,0
-0,39.4,104000,5300,33,0
-0,45.9,32000,6200,56,0
-1,42.9,149000,8300,46,1
-1,40,61000,10100,188,1
-0,41,42000,9500,105,0
-1,41,71000,7800,38,1
-1,34.9,81000,3600,15,1
-0,33.6,249000,10700,13,0
-0,40.5,152000,2400,35,0
-1,43.4,13000,12600,447,1
-1,37.2,20000,6800,59,1
-0,36.6,237700,15400,20,0
-0,39,162000,5200,13,0
-0,40.1,232000,6400,17,0
-0,35,111000,9800,35,0
-0,44,106000,5500,34,0
-0,43.9,54000,2100,22,0
-0,40.9,55000,8600,71,0
-0,37.4,72000,2400,22,0
-0,40.6,87000,9200,34,0
-1,40,248000,10800,17,0
-0,39.3,122000,6200,107,0
-0,41,223000,5300,17,0
-0,39,89000,1800,21,0
-0,38.7,74000,3500,41,0
-0,43,54000,6000,34,0
-0,40.2,45000,9400,169,0
-0,39.1,29000,11100,27,0
-0,42.6,103000,1600,30,0
-1,36.4,173000,9500,50,1
-0,32.8,36000,2400,25,0
-0,36,203000,8600,25,0
-1,43.6,40000,4200,40,1
-0,42,95000,3600,31,0
-0,43.7,88000,3600,22,0
-0,33.4,98000,5100,34,0
-1,38.7,115000,7800,300,0
-0,33.8,167000,17500,76,0
-0,37.2,174000,4600,16,0
-0,34.9,33000,5500,14,0
-1,40.1,57000,6500,98,0
-1,39.1,76000,7900,44,0
-1,38,93000,11200,125,0
-0,39,71000,2500,14,0
-0,37.2,79000,7500,31,0
-0,30.8,217000,9100,30,0
-0,48.9,22000,5700,48,0
-0,39.2,152000,6900,169,0
-1,37,34000,7700,35,0
-0,40.3,116000,2100,26,0
-1,43,56000,4400,129,1
-0,49.6,52000,7770,25,0
-0,41.1,62000,2300,25,0
-0,40.8,59000,7400,73,0
-0,36,50000,5600,500,0
-0,37.3,91000,5000,70,0
-0,33,125000,3500,9,0
-1,49,15000,18600,1132,1
-1,41,27000,6280,255,1
-0,40.8,106000,6600,10,1
-1,45.6,11000,4600,306,1
-0,34.8,97000,22400,107,0
-0,34.7,416000,16200,25,0
-0,43.4,39000,4700,30,0
-0,39.6,135000,4000,30,0
-0,45.4,39000,4300,42,0
-0,41.3,99000,3700,34,0
-1,34.1,40000,6100,259,1
-0,34.4,61000,2700,28,0
-0,42.9,101000,8300,9,0
-0,41,25000,1900,18,0
-0,40.2,83000,2000,99,0
-0,39.3,144000,2800,9,0
-0,39.3,79000,4100,57,0
-0,38.7,157000,5400,13,1
-0,38,99000,4000,26,0
-0,38.1,39000,4500,6,0
-0,39,126000,5900,27,0
-0,41.5,73000,3500,90,0
-0,42.7,83000,6600,99,0
-0,37.8,187000,4000,15,0
-0,47,98000,4000,264,0
-0,34.6,100000,4000,23,0
-0,40.5,61000,3500,48,0
-0,40.2,45000,2900,30,0
-0,36.6,49000,10300,12,0
-0,38.8,57000,10700,33,0
-0,46.9,21000,3500,35,0
-0,32.7,57000,6500,95,0
-0,38.5,230000,9200,6,0
-0,28.5,191000,11200,18,0
-1,42.9,50000,5300,630,0
-0,40.9,89000,3900,34,0
-0,42.8,36000,6000,40,0
-0,45.1,39000,6200,18,0
-0,48.4,38000,4500,165,0
-0,45,83000,3500,15,0
-0,41.4,31000,6100,30,0
-0,37.8,148000,5000,12,0
-0,38.4,66000,1800,30,0
-0,37.2,60000,12900,49,0
-0,47.7,53000,3400,135,0
-0,45,160000,7400,14,0
-0,44.7,105000,5600,26,0
-1,33.3,41000,8800,28,0
-0,36.7,240000,7000,25,0
-0,37.1,174000,7500,11,0
-1,34.1,40000,6100,259,0
-1,37.7,48000,3600,27,0
-1,42,60000,3000,97,0
-0,39.2,116000,5300,74,0
-0,45,240000,8800,25,0
-0,43.6,111000,2900,14,0
-0,38.5,130000,6400,15,0
-0,43.8,83000,3500,17,0
-0,31.2,230000,7100,17,0
-0,42.4,88000,4600,22,0
-0,42,216000,4400,23,0
-0,35.8,145000,3900,28,0
-0,41.5,104000,4200,19,0
-0,32.6,172000,5900,18,0
-0,42.7,115000,6500,19,0
-0,41.1,92000,3100,16,0
-0,38.2,108000,3000,25,0
-0,42.3,101000,5100,14,0
-0,40.8,92000,3900,12,0
-1,34.7,479000,10500,608,0
-0,42.9,49000,1700,40,0
-1,44.9,46000,8900,35,0
-0,32.8,62000,2800,13,0
-0,39.8,49000,2400,21,0
-0,49.8,11000,5600,107,0
-0,40.9,154000,3200,5,0
-0,41.4,99000,2300,16,0
-0,39.5,71000,4000,13,0
-1,54.1,24000,11300,10,0
-0,41.8,307000,7400,11,0
-0,35.5,55000,8300,57,0
-0,40.9,222000,6400,22,0
-0,33.9,206000,4200,14,0
-0,38,156000,4700,57,0
-0,43.5,56000,3600,26,0
-1,39,185000,9100,896,0
-0,38.3,71000,3200,14,0
-0,39.4,132000,5600,10,0
-0,37.9,149000,7900,14,0
-0,38.4,127000,5300,32,0
-0,46.8,50000,3700,16,0
-0,37.5,96000,4000,9,0
-0,38,108000,1800,21,0
-0,40.9,90000,4000,40,0
-0,39.6,144000,5000,14,0
-0,39,67000,5000,89,0
-1,44.5,114000,3100,98,0
-0,39.3,129000,2500,16,0
-0,37.8,66000,6700,16,0
-0,34.7,269000,5300,13,0
-0,34,210000,6800,25,1
-1,38.3,113000,6100,19,0
-0,37.9,208000,5700,20,0
-0,41.3,53000,5300,235,0
-1,46.8,13000,3700,83,1
-0,37.8,90000,5000,24,0
-0,42.3,132000,6200,10,0
-0,40.4,124000,2700,26,0
-0,43.4,128000,8500,50,0
-0,38.5,115000,4200,22,0
-0,38.7,76000,3700,15,0
-1,45.9,71000,3900,12,0
-0,43.7,115000,5400,30,0
-0,30.1,399000,10000,30,0
-0,37.8,94000,5800,16,0
-0,43.6,177000,2900,15,0
-1,44.9,46000,1500,23,0
-0,38.5,79000,4300,33,0
-0,44.3,62000,5200,18,0
-0,43.4,98000,1700,136,0
-0,37.7,158000,4500,15,0
-0,44.2,94000,3100,76,0
-1,44.4,14000,5800,50,0
-0,40.5,103000,4300,40,0
-0,39.8,178000,5600,14,0
-0,43.5,120000,6700,,0
-0,38.5,129000,5800,16,0
-0,37.9,119000,5000,20,0
-0,36.8,52000,3600,23,0
-0,42.6,201000,3800,24,0
-0,36.6,173000,6500,11,0
-0,40,32000,4200,36,0
-0,38.8,102000,2800,12,0
-0,38.6,145000,12800,19,0
-0,40.3,59000,6000,20,0
-0,34.1,84000,2600,18,0
-0,39.8,190000,8100,25,0
-0,39.8,42000,2300,72,0
-0,40,98000,6200,15,0
-0,41.2,150000,3700,9,0
-0,40,52000,1800,65,0
-1,37.7,65000,7200,10,1
-1,38.7,37000,3200,160,1
-1,54.6,42000,24100,1481,1
-1,36.6,47000,6500,189,1`;
+var DATA="complicado,hematocrito,plaquetas,leucocitos_max,alt,hipotension\n1,46,30000,5100,53,1\n1,38.6,43000,5300,21,0\n0,35.5,129000,2600,12,0\n0,42.1,70000,4800,171,0\n0,41,184000,9100,45,0\n1,33.4,103000,2400,291,1\n0,39.6,158000,3000,18,0\n0,41.2,71000,4100,20,0\n0,42.4,59000,9100,11,0\n0,34.6,115000,4000,16,0\n0,37.4,130000,2000,21,0\n0,37.5,94000,3600,17,0\n0,45.7,87000,11400,145,1\n0,39,108000,5900,12,0\n1,41.9,104000,2600,34,0\n1,41.4,68000,6440,22.5,1\n0,36,104000,3600,31,0\n0,46,197000,2900,22,0\n1,41.1,23000,6300,118,1\n0,37.1,166000,7800,13,0\n0,39.8,72000,8400,30,0\n1,44.9,46000,7100,23,0\n0,36.8,190000,9100,13,0\n0,39.6,77000,6500,11,0\n1,36.5,31000,5700,87,1\n0,39.9,125000,5100,16,0\n0,41,110000,3100,20,0\n0,41.7,67000,9600,52,0\n0,39.7,174000,5900,19,0\n1,47.8,114000,3100,98,1\n0,40.7,78000,2000,18,0\n0,43.2,53000,6900,159,0\n0,40.1,64000,1700,114,0\n0,40.8,69000,5100,17,0\n0,41.6,40000,4600,35,0\n0,40.5,109000,3200,17,1\n0,49.2,84000,5000,14,0\n0,40.2,115000,6600,72,0\n0,39.8,119000,6600,31,0\n0,38.7,98000,12000,19,0\n0,39,67000,4800,24,1\n1,40.9,37000,7700,179,0\n0,39.2,95000,4100,29,0\n1,51.3,22000,9900,168,0\n1,38,88000,4000,9,0\n1,44.4,52000,7440,70,1\n0,42,63000,3800,13,0\n1,41.6,34000,10500,145,0\n0,38.2,86000,2700,20,0\n0,39.9,240000,4800,40,0\n0,40.5,54000,6400,21,0\n0,40.5,46000,3600,143,0\n0,38.2,44000,7200,11,0\n0,38.6,172000,3900,35,0\n0,37.4,156000,3500,112,0\n0,38.2,57000,1900,10,0\n0,41,72000,7100,28,0\n0,39,73000,10700,47,0\n0,42.7,112000,2200,124,0\n1,43.7,85000,6100,34,0\n0,36.6,98000,2700,23,0\n0,36.4,86000,6300,12,0\n1,45.7,153000,8500,12,1\n1,29.9,160000,5600,15,0\n0,38.9,93000,5800,13,0\n1,37.9,20000,5100,113,1\n0,40.3,144000,2900,32,0\n0,38.8,172000,2900,11,0\n0,37.6,146000,4500,24,0\n0,38.3,127000,2900,22,0\n0,36.4,55000,11800,20,0\n0,34.2,67000,4200,25,0\n0,42,152000,3800,14,0\n0,36.8,176000,3800,25,0\n1,52.1,13000,4500,41,1\n1,46.5,40000,2600,24,0\n0,43.6,177000,2900,15,0\n0,48,35000,3800,40,0\n0,38.3,94000,8300,38,0\n1,38.9,89000,7400,20,0\n0,40.7,88000,4000,263,0\n0,40.7,195000,5300,49,0\n1,45.3,15000,5000,77,0\n0,41.3,86000,6600,161,0\n0,33.1,100000,3900,40,0\n1,51.1,17000,4000,130,0\n1,44.4,44000,7900,151,0\n0,41.7,142000,4900,15,1\n1,46.3,26000,9000,331,1\n0,36.3,90000,5700,40,0\n0,39.5,127000,3400,35,0\n0,36.6,70000,3000,25,1\n0,39.9,91000,5200,33,0\n0,34.4,248000,6200,18,0\n0,43,80000,3600,121,0\n0,44.2,159000,6100,51,0\n0,37,87000,4900,30,0\n0,39.9,76000,8100,15,1\n0,41.4,56000,6300,45,0\n0,37.3,177000,9000,11,0\n0,38.7,16000,1800,53,0\n0,39.4,104000,5300,33,0\n0,45.9,32000,6200,56,0\n1,42.9,149000,8300,46,1\n1,40,61000,10100,188,1\n0,41,42000,9500,105,0\n1,41,71000,7800,38,1\n1,34.9,81000,3600,15,1\n0,33.6,249000,10700,13,0\n0,40.5,152000,2400,35,0\n1,43.4,13000,12600,447,1\n1,37.2,20000,6800,59,1\n0,36.6,237700,15400,20,0\n0,39,162000,5200,13,0\n0,40.1,232000,6400,17,0\n0,35,111000,9800,35,0\n0,44,106000,5500,34,0\n0,43.9,54000,2100,22,0\n0,40.9,55000,8600,71,0\n0,37.4,72000,2400,22,0\n0,40.6,87000,9200,34,0\n1,40,248000,10800,17,0\n0,39.3,122000,6200,107,0\n0,41,223000,5300,17,0\n0,39,89000,1800,21,0\n0,38.7,74000,3500,41,0\n0,43,54000,6000,34,0\n0,40.2,45000,9400,169,0\n0,39.1,29000,11100,27,0\n0,42.6,103000,1600,30,0\n1,36.4,173000,9500,50,1\n0,32.8,36000,2400,25,0\n0,36,203000,8600,25,0\n1,43.6,40000,4200,40,1\n0,42,95000,3600,31,0\n0,43.7,88000,3600,22,0\n0,33.4,98000,5100,34,0\n1,38.7,115000,7800,300,0\n0,33.8,167000,17500,76,0\n0,37.2,174000,4600,16,0\n0,34.9,33000,5500,14,0\n1,40.1,57000,6500,98,0\n1,39.1,76000,7900,44,0\n1,38,93000,11200,125,0\n0,39,71000,2500,14,0\n0,37.2,79000,7500,31,0\n0,30.8,217000,9100,30,0\n0,48.9,22000,5700,48,0\n0,39.2,152000,6900,169,0\n1,37,34000,7700,35,0\n0,40.3,116000,2100,26,0\n1,43,56000,4400,129,1\n0,49.6,52000,7770,25,0\n0,41.1,62000,2300,25,0\n0,40.8,59000,7400,73,0\n0,36,50000,5600,500,0\n0,37.3,91000,5000,70,0\n0,33,125000,3500,9,0\n1,49,15000,18600,1132,1\n1,41,27000,6280,255,1\n0,40.8,106000,6600,10,1\n1,45.6,11000,4600,306,1\n0,34.8,97000,22400,107,0\n0,34.7,416000,16200,25,0\n0,43.4,39000,4700,30,0\n0,39.6,135000,4000,30,0\n0,45.4,39000,4300,42,0\n0,41.3,99000,3700,34,0\n1,34.1,40000,6100,259,1\n0,34.4,61000,2700,28,0\n0,42.9,101000,8300,9,0\n0,41,25000,1900,18,0\n0,40.2,83000,2000,99,0\n0,39.3,144000,2800,9,0\n0,39.3,79000,4100,57,0\n0,38.7,157000,5400,13,1\n0,38,99000,4000,26,0\n0,38.1,39000,4500,6,0\n0,39,126000,5900,27,0\n0,41.5,73000,3500,90,0\n0,42.7,83000,6600,99,0\n0,37.8,187000,4000,15,0\n0,47,98000,4000,264,0\n0,34.6,100000,4000,23,0\n0,40.5,61000,3500,48,0\n0,40.2,45000,2900,30,0\n0,36.6,49000,10300,12,0\n0,38.8,57000,10700,33,0\n0,46.9,21000,3500,35,0\n0,32.7,57000,6500,95,0\n0,38.5,230000,9200,6,0\n0,28.5,191000,11200,18,0\n1,42.9,50000,5300,630,0\n0,40.9,89000,3900,34,0\n0,42.8,36000,6000,40,0\n0,45.1,39000,6200,18,0\n0,48.4,38000,4500,165,0\n0,45,83000,3500,15,0\n0,41.4,31000,6100,30,0\n0,37.8,148000,5000,12,0\n0,38.4,66000,1800,30,0\n0,37.2,60000,12900,49,0\n0,47.7,53000,3400,135,0\n0,45,160000,7400,14,0\n0,44.7,105000,5600,26,0\n1,33.3,41000,8800,28,0\n0,36.7,240000,7000,25,0\n0,37.1,174000,7500,11,0\n1,34.1,40000,6100,259,0\n1,37.7,48000,3600,27,0\n1,42,60000,3000,97,0\n0,39.2,116000,5300,74,0\n0,45,240000,8800,25,0\n0,43.6,111000,2900,14,0\n0,38.5,130000,6400,15,0\n0,43.8,83000,3500,17,0\n0,31.2,230000,7100,17,0\n0,42.4,88000,4600,22,0\n0,42,216000,4400,23,0\n0,35.8,145000,3900,28,0\n0,41.5,104000,4200,19,0\n0,32.6,172000,5900,18,0\n0,42.7,115000,6500,19,0\n0,41.1,92000,3100,16,0\n0,38.2,108000,3000,25,0\n0,42.3,101000,5100,14,0\n0,40.8,92000,3900,12,0\n1,34.7,479000,10500,608,0\n0,42.9,49000,1700,40,0\n1,44.9,46000,8900,35,0\n0,32.8,62000,2800,13,0\n0,39.8,49000,2400,21,0\n0,49.8,11000,5600,107,0\n0,40.9,154000,3200,5,0\n0,41.4,99000,2300,16,0\n0,39.5,71000,4000,13,0\n1,54.1,24000,11300,10,0\n0,41.8,307000,7400,11,0\n0,35.5,55000,8300,57,0\n0,40.9,222000,6400,22,0\n0,33.9,206000,4200,14,0\n0,38,156000,4700,57,0\n0,43.5,56000,3600,26,0\n1,39,185000,9100,896,0\n0,38.3,71000,3200,14,0\n0,39.4,132000,5600,10,0\n0,37.9,149000,7900,14,0\n0,38.4,127000,5300,32,0\n0,46.8,50000,3700,16,0\n0,37.5,96000,4000,9,0\n0,38,108000,1800,21,0\n0,40.9,90000,4000,40,0\n0,39.6,144000,5000,14,0\n0,39,67000,5000,89,0\n1,44.5,114000,3100,98,0\n0,39.3,129000,2500,16,0\n0,37.8,66000,6700,16,0\n0,34.7,269000,5300,13,0\n0,34,210000,6800,25,1\n1,38.3,113000,6100,19,0\n0,37.9,208000,5700,20,0\n0,41.3,53000,5300,235,0\n1,46.8,13000,3700,83,1\n0,37.8,90000,5000,24,0\n0,42.3,132000,6200,10,0\n0,40.4,124000,2700,26,0\n0,43.4,128000,8500,50,0\n0,38.5,115000,4200,22,0\n0,38.7,76000,3700,15,0\n1,45.9,71000,3900,12,0\n0,43.7,115000,5400,30,0\n0,30.1,399000,10000,30,0\n0,37.8,94000,5800,16,0\n0,43.6,177000,2900,15,0\n1,44.9,46000,1500,23,0\n0,38.5,79000,4300,33,0\n0,44.3,62000,5200,18,0\n0,43.4,98000,1700,136,0\n0,37.7,158000,4500,15,0\n0,44.2,94000,3100,76,0\n1,44.4,14000,5800,50,0\n0,40.5,103000,4300,40,0\n0,39.8,178000,5600,14,0\n0,43.5,120000,6700,,0\n0,38.5,129000,5800,16,0\n0,37.9,119000,5000,20,0\n0,36.8,52000,3600,23,0\n0,42.6,201000,3800,24,0\n0,36.6,173000,6500,11,0\n0,40,32000,4200,36,0\n0,38.8,102000,2800,12,0\n0,38.6,145000,12800,19,0\n0,40.3,59000,6000,20,0\n0,34.1,84000,2600,18,0\n0,39.8,190000,8100,25,0\n0,39.8,42000,2300,72,0\n0,40,98000,6200,15,0\n0,41.2,150000,3700,9,0\n0,40,52000,1800,65,0\n1,37.7,65000,7200,10,1\n1,38.7,37000,3200,160,1\n1,54.6,42000,24100,1481,1\n1,36.6,47000,6500,189,1";
 var T4=[[0,100,0,0],[1,93.65,39.17,.33],[2,84.13,72.5,.57],[3,61.9,91.67,.54],[4,47.62,98.33,.46],[5,38.1,99.58,.38],[6,14.29,99.58,.14],[7,6.35,100,.06]];
 var OR=[["Hematocrito ≥ 42 %",2.56,1.04,6.33],["Plaquetas ≤ 75 000",2.89,1.30,6.39],["Leucocitos ≥ 7 000",3.19,1.39,7.33],["ALT ≥ 70 U/L",2.92,1.24,6.90],["Hipotensión",20.11,7.50,53.89]];
 var BIV=[["Hipotensión",76.3,12.8,"&lt; 0,001"],["Sangrado",83.3,19.5,"&lt; 0,001"],["Organomegalia",77.8,19.0,"&lt; 0,001"],["ALT ≥ 70 U/L",47.8,13.1,"&lt; 0,001"],["Plaquetas ≤ 75 000",36.4,10.4,"&lt; 0,001"],["Leucocitos ≥ 7 000",36.0,15.8,"&lt; 0,001"],["Hematocrito ≥ 42 %",35.4,15.6,"&lt; 0,001"],["Fiebre ≥ 6 días",30.9,17.9,"0,020"],["Vómitos",27.6,15.9,"0,014"]];
@@ -485,12 +248,13 @@ var $=function(id){return document.getElementById(id)};
 var f=function(n){return String(n).replace(".",",")};
 var pct=function(x){return f((100*x).toFixed(1))+" %"};
 var risk=function(s){return s<=1?["Bajo","p-low"]:s===2?["Aumentado","p-mid"]:["Alto","p-high"]};
+var OBS=null;
+function getObs(){if(OBS)return OBS;OBS=[];for(var i=0;i<8;i++)OBS.push([0,0]);
+  parseCSV(DATA).slice(1).forEach(function(r){if(r.length<6)return;var s=scoreOf(num(r[1]),num(r[2]),num(r[3]),num(r[4]),r[5]==="1").s;OBS[s][0]++;if(r[0]==="1")OBS[s][1]++});return OBS}
 
 /* pestañas */
-document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){
-  document.querySelectorAll(".tabs button").forEach(function(x){x.setAttribute("aria-selected",x===b)});
-  ["calc","lote","est"].forEach(function(id){$(id).hidden=id!==b.dataset.t});
-})});
+function go(t){document.querySelectorAll(".tabs button").forEach(function(x){x.setAttribute("aria-selected",x.dataset.t===t)});["inicio","eda","est","calc","lote"].forEach(function(id){$(id).hidden=id!==t});window.scrollTo(0,0)}
+document.querySelectorAll("[data-t],[data-go]").forEach(function(b){b.addEventListener("click",function(){go(b.dataset.t||b.dataset.go)})});
 
 /* calculadora */
 var bar=$("bar");for(var i=0;i<7;i++)bar.appendChild(document.createElement("i"));
@@ -519,11 +283,13 @@ function calc(){
   else if(total===2){cls+=" v-mid";t="Riesgo aumentado";d="Observación hospitalaria según el estudio."}
   else{cls+=" v-high";t="Riesgo alto";d="Cuidados intensivos y reanimación temprana según el estudio."}
   $("verdict").className=cls;$("vt").textContent=t;$("vd").textContent=d;
+  var o=getObs()[total];$("obs").textContent=missing.length?"":(o[0]?"En la cohorte del estudio, "+o[1]+" de "+o[0]+" niños con "+total+" punto"+(total===1?"":"s")+" tuvieron dengue complicado ("+pct(o[1]/o[0])+").":"Ningún niño de la cohorte tuvo este puntaje.");
+  $("who").textContent=[$("pn").value.trim(),$("ph").value.trim(),$("pa").value?$("pa").value+" años":""].filter(Boolean).join(" · ");
   $("warn").textContent=missing.length?"Datos pendientes: "+missing.join(", ")+".":"";
 }
-ids.forEach(function(id){$(id).addEventListener("input",calc)});
+ids.concat(["pn","ph","pa"]).forEach(function(id){$(id).addEventListener("input",calc)});
 $("hypo").addEventListener("change",calc);
-$("reset").addEventListener("click",function(){ids.forEach(function(id){$(id).value=""});$("hypo").checked=false;calc()});
+$("reset").addEventListener("click",function(){ids.concat(["pn","ph","pa"]).forEach(function(id){$(id).value=""});$("hypo").checked=false;calc()});
 calc();
 
 /* lotes */
@@ -638,6 +404,33 @@ $("dl").addEventListener("click",function(){
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+l.join("\n")],{type:"text/csv"}));a.download="resultados_score_dengue.csv";a.click();
 });
 
+$("tpl").addEventListener("click",function(){
+  if(typeof XLSX==="undefined"){$("lerr").textContent="El lector de Excel no cargó. Recarga la página e inténtalo de nuevo.";return}
+  var d=[["paciente","hematocrito","plaquetas","leucocitos_max","alt","hipotension","complicado"],["A",35.5,129000,2600,12,0,0],["B",46.5,40000,2600,24,0,1],["C",44.4,52000,7440,70,1,1],["D",38.6,43000,5300,21,0,1]];
+  var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d),"Pacientes");XLSX.writeFile(wb,"plantilla_score_dengue.xlsx");
+});
+$("dlx").addEventListener("click",function(){
+  if(!RES.length||typeof XLSX==="undefined")return;
+  var d=[["paciente","hematocrito","plaquetas","leucocitos","alt","hipotension","puntaje","riesgo","datos_incompletos","resultado_real"]];
+  RES.forEach(function(x){d.push([x.i].concat(x.p,[x.hy===null?"":x.hy?1:0,x.s,risk(x.s)[0],x.miss?1:0,x.o===null?"":x.o?1:0]))});
+  var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d),"Resultados");XLSX.writeFile(wb,"resultados_score_dengue.xlsx");
+});
+(function(){ /* EDA con los datos reales */
+  var rows=parseCSV(DATA).slice(1).filter(function(r){return r.length>=6}),G=[[],[]];
+  var cols=[["Hematocrito (%)",1],["Plaquetas (células/mm³)",2],["Leucocitos más altos",3],["ALT (U/L)",4]],miss=0;
+  rows.forEach(function(r){G[r[0]==="1"?1:0].push(r);for(var i=1;i<5;i++)if(num(r[i])===null)miss++});
+  $("efacts").innerHTML='<div><b>'+rows.length+'</b><span>Pacientes</span></div><div><b>5</b><span>Variables del score</span></div><div><b>'+miss+'</b><span>Valores ausentes</span></div><div><b>'+pct(G[1].length/rows.length)+'</b><span>Con dengue complicado</span></div>';
+  var q=function(a,p){a=a.slice().sort(function(x,y){return x-y});var i=(a.length-1)*p,l=Math.floor(i);return a[l]+(a[Math.ceil(i)]-a[l])*(i-l)};
+  var fm=function(v){return v>=1000?String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g," "):f(String(Math.round(v*10)/10))};
+  var st=function(g,c){var a=g.map(function(r){return num(r[c])}).filter(function(v){return v!==null});return fm(q(a,.5))+" ("+fm(q(a,.25))+" a "+fm(q(a,.75))+")"};
+  var h=cols.map(function(c){return '<tr><td>'+c[0]+'</td><td>'+st(G[0],c[1])+'</td><td>'+st(G[1],c[1])+'</td></tr>'}).join("");
+  var hy=function(g){return pct(g.filter(function(r){return r[5]==="1"}).length/g.length)};
+  $("ecmp").innerHTML=h+'<tr><td>Hipotensión</td><td>'+hy(G[0])+'</td><td>'+hy(G[1])+'</td></tr>';
+  var mx=Math.max(G[0].length,G[1].length),g="";
+  [["Sin complicaciones",G[0].length,"var(--accent2)"],["Complicado",G[1].length,"var(--c2)"]].forEach(function(b,i){var y=14+i*54,w=b[1]/mx*200;
+    g+='<text x="0" y="'+(y+14)+'">'+b[0]+'</text><rect x="120" y="'+y+'" width="'+w+'" height="26" fill="'+b[2]+'"/><text x="'+(126+w)+'" y="'+(y+18)+'">'+b[1]+'</text>'});
+  $("egrp").innerHTML=g;
+})();
 /* gráficos del estudio */
 $("t4").innerHTML=T4.map(function(r){return '<tr'+(r[0]===2?' class="sel"':'')+'><td>≥ '+r[0]+'</td><td>'+f(r[1].toFixed(1))+' %</td><td>'+f(r[2].toFixed(1))+' %</td><td>'+f(r[3].toFixed(2))+'</td></tr>'}).join("");
 (function(){
@@ -679,4 +472,4 @@ $("biv").innerHTML=BIV.map(function(r){
 })();
 </script>
 </body>
-</html></html>
+</html>
