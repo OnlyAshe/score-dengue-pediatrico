@@ -5,32 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Score de complicaciones en dengue pediátrico</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-:root{--bg:#f4f6f8;--surface:#fff;--ink:#16222b;--muted:#5d6d78;--line:#d8e0e6;--accent:#12425e;--accent2:#1d6f9a;--low:#1f7a4d;--mid:#a86400;--high:#b3261e;--seg:#e2e8ec;--head:#12425e;--headink:#fff;
-box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f171d;--surface:#16222b;--ink:#e8eef2;--muted:#9aabb6;--line:#2a3a46;--accent:#6bb6e0;--accent2:#6bb6e0;--low:#4cc38a;--mid:#f0b34a;--high:#ff8a80;--seg:#26363f;--head:#0b1217;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f171d;--surface:#16222b;--ink:#e8eef2;--muted:#9aabb6;--line:#2a3a46;--accent:#6bb6e0;--accent2:#6bb6e0;--low:#4cc38a;--mid:#f0b34a;--high:#ff8a80;--seg:#26363f;--head:#0b1217;color-scheme:dark}
+:root{--bg:#f4f6f8;--surface:#fff;--ink:#16222b;--muted:#5d6d78;--line:#d8e0e6;--accent2:#1d6f9a;--low:#1f7a4d;--mid:#a86400;--high:#b3261e;--seg:#e2e8ec;--head:#12425e;--c2:#b3261e;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f171d;--surface:#16222b;--ink:#e8eef2;--muted:#9aabb6;--line:#2a3a46;--accent2:#6bb6e0;--low:#4cc38a;--mid:#f0b34a;--high:#ff8a80;--seg:#26363f;--head:#0b1217;--c2:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f171d;--surface:#16222b;--ink:#e8eef2;--muted:#9aabb6;--line:#2a3a46;--accent2:#6bb6e0;--low:#4cc38a;--mid:#f0b34a;--high:#ff8a80;--seg:#26363f;--head:#0b1217;--c2:#ff8a80;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums}
-header{background:var(--head);color:var(--headink);padding:calc(22px + env(safe-area-inset-top,0px)) 16px 22px}
-header div,main{max-width:960px;margin:0 auto}
+header{background:var(--head);color:#fff;padding:calc(22px + env(safe-area-inset-top,0px)) 16px 0}
+header>div,main{max-width:980px;margin:0 auto}
 h1{font-size:clamp(1.3rem,4vw,1.75rem);font-weight:600;margin:0;line-height:1.25}
-header p{margin:6px 0 0;font-size:.9rem;opacity:.8}
+header p{margin:6px 0 14px;font-size:.9rem;opacity:.8}
+.tabs{display:flex;gap:2px;overflow-x:auto}
+.tabs button{margin:0;border:0;border-radius:4px 4px 0 0;background:transparent;color:#fff;opacity:.7;padding:10px 16px;white-space:nowrap}
+.tabs button[aria-selected=true]{background:var(--bg);color:var(--ink);opacity:1}
 main{padding:20px 16px 40px}
 h2{font-size:.95rem;font-weight:600;margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+h3{font-size:.85rem;font-weight:600;margin:20px 0 8px;color:var(--muted)}
 .grid{display:grid;gap:16px}
-@media(min-width:780px){.grid.two{grid-template-columns:1.1fr .9fr}}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px}
+@media(min-width:780px){.grid.two{grid-template-columns:1.1fr .9fr}.grid.eq{grid-template-columns:1fr 1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;margin-bottom:16px}
 .field{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;margin-bottom:14px}
 .field label{font-weight:500}
-.field .tag{font-size:.82rem;color:var(--muted);text-align:right}
+.tag{font-size:.82rem;color:var(--muted);text-align:right}
 .field input{grid-column:1/-1}
-input[type=number]{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
-input:focus-visible,button:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}
+input[type=number],select{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+input:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}
 .check{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:4px;cursor:pointer;font-weight:500}
 .check input{width:20px;height:20px;accent-color:var(--accent2)}
-.check .tag{margin-left:auto;font-size:.82rem;color:var(--muted);font-weight:400}
-button{font:inherit;font-weight:500;padding:9px 16px;border-radius:4px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;margin-top:16px}
+.check .tag{margin-left:auto;font-weight:400}
+button{font:inherit;font-weight:500;padding:9px 16px;border-radius:4px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;margin:12px 8px 0 0}
+button.pri{background:var(--accent2);border-color:var(--accent2);color:#fff}
 .score{display:flex;align-items:baseline;gap:8px}
 .score b{font-size:4rem;font-weight:600;line-height:1}
 .score span{color:var(--muted)}
@@ -46,141 +51,16 @@ ul.parts{list-style:none;padding:0;margin:14px 0 0;font-size:.9rem}
 ul.parts li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);color:var(--muted)}
 ul.parts li.y{color:var(--ink);font-weight:600}
 .warn{font-size:.82rem;color:var(--mid);margin:10px 0 0;min-height:1.2em}
-.facts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));margin-bottom:18px}
+.note{font-size:.85rem;color:var(--muted);margin:0 0 12px}
+.facts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));margin-bottom:6px}
 .facts div{border:1px solid var(--line);border-radius:4px;padding:10px 12px}
-.facts b{display:block;font-size:1.4rem;font-weight:600}
-.facts span{font-size:.8rem;color:var(--muted)}
-.scroll{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:400px}
-th{font-weight:600;color:var(--muted);font-size:.8rem}
-th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+.facts b{display:block;font-size:1.35rem;font-weight:600}
+.facts span{font-size:.78rem;color:var(--muted)}
+.scroll{overflow-x:auto;max-height:420px}
+table{border-collapse:collapse;width:100%;font-size:.86rem;min-width:380px}
+th{font-weight:600;color:var(--muted);font-size:.78rem;position:sticky;top:0;background:var(--surface)}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--line)}
 th:first-child,td:first-child{text-align:left}
 tr.sel td{background:var(--bg);font-weight:600}
-svg text{fill:var(--muted);font:11px "IBM Plex Sans",sans-serif}
-footer{margin-top:20px;font-size:.8rem;color:var(--muted)}
-a{color:var(--accent2)}
-</style>
-</head>
-<body>
-<header><div>
-<h1>Score de complicaciones en dengue pediátrico</h1>
-<p>Bhaskar M, et al. F1000Research 2022, 11:446</p>
-</div></header>
-<main>
-<div class="grid two">
-  <div class="card">
-    <h2>Datos del paciente</h2>
-    <div class="field"><label for="pcv">Hematocrito (%)</label><span class="tag">≥ 42 · +1</span>
-      <input id="pcv" type="number" inputmode="decimal" min="0" max="80" step="0.1"></div>
-    <div class="field"><label for="plt">Plaquetas (células/mm³)</label><span class="tag">≤ 75 000 · +1</span>
-      <input id="plt" type="number" inputmode="numeric" min="0" step="1000"></div>
-    <div class="field"><label for="wbc">Leucocitos más altos (células/mm³)</label><span class="tag">≥ 7 000 · +1</span>
-      <input id="wbc" type="number" inputmode="numeric" min="0" step="100"></div>
-    <div class="field"><label for="alt">ALT (U/L)</label><span class="tag">≥ 70 · +1</span>
-      <input id="alt" type="number" inputmode="decimal" min="0" step="1"></div>
-    <label class="check" for="hypo"><input id="hypo" type="checkbox">Hipotensión<span class="tag">+3</span></label>
-    <button id="reset" type="button">Borrar datos</button>
-  </div>
-
-  <div class="card" aria-live="polite">
-    <h2>Resultado</h2>
-    <div class="score"><b id="score">0</b><span>de 7</span></div>
-    <div class="bar" id="bar"></div>
-    <div class="mark"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
-    <div class="verdict" id="verdict"><strong id="vt"></strong><span id="vd"></span></div>
-    <ul class="parts" id="parts"></ul>
-    <p class="warn" id="warn"></p>
-  </div>
-</div>
-
-<div class="card" style="margin-top:16px">
-  <h2>Desempeño del score (n = 303; 63 con dengue complicado)</h2>
-  <div class="facts">
-    <div><b>84,1 %</b><span>Sensibilidad</span></div>
-    <div><b>72,5 %</b><span>Especificidad</span></div>
-    <div><b>44,5 %</b><span>VPP</span></div>
-    <div><b>94,5 %</b><span>VPN</span></div>
-    <div><b>0,86</b><span>AUC (IC 95 %: 0,80 a 0,92)</span></div>
-  </div>
-  <div class="grid two" style="align-items:start">
-    <svg id="roc" viewBox="0 0 320 300" width="100%" role="img" aria-label="Curva ROC del score"></svg>
-    <div class="scroll">
-      <table>
-        <thead><tr><th>Umbral</th><th>Sensibilidad</th><th>Especificidad</th><th>Youden</th></tr></thead>
-        <tbody id="t4"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<footer>Herramienta informativa. No sustituye el juicio clínico. Validación interna únicamente. <a href="https://doi.org/10.12688/f1000research.111214.1">doi.org/10.12688/f1000research.111214.1</a></footer>
-</main>
-
-<script>
-(function(){
-var T4=[[0,100,0,0],[1,93.65,39.17,.33],[2,84.13,72.5,.57],[3,61.9,91.67,.54],[4,47.62,98.33,.46],[5,38.1,99.58,.38],[6,14.29,99.58,.14],[7,6.35,100,.06]];
-var $=function(id){return document.getElementById(id)};
-var f=function(n){return String(n).replace(".",",")};
-var bar=$("bar");
-for(var i=0;i<7;i++)bar.appendChild(document.createElement("i"));
-
-$("t4").innerHTML=T4.map(function(r){
-  return '<tr'+(r[0]===2?' class="sel"':'')+'><td>≥ '+r[0]+'</td><td>'+f(r[1].toFixed(1))+' %</td><td>'+f(r[2].toFixed(1))+' %</td><td>'+f(r[3].toFixed(2))+'</td></tr>';
-}).join("");
-
-(function(){
-  var x0=44,y0=262,w=250,h=235,g="";
-  var pts=T4.map(function(r){return [x0+(1-r[2]/100)*w,y0-(r[1]/100)*h,r[0]]});
-  [0,.25,.5,.75,1].forEach(function(v){
-    g+='<line x1="'+x0+'" x2="'+(x0+w)+'" y1="'+(y0-v*h)+'" y2="'+(y0-v*h)+'" stroke="var(--line)"/>';
-    g+='<text x="'+(x0-6)+'" y="'+(y0-v*h+4)+'" text-anchor="end">'+f(v.toFixed(2))+'</text>';
-    g+='<text x="'+(x0+v*w)+'" y="'+(y0+16)+'" text-anchor="middle">'+f(v.toFixed(2))+'</text>';
-  });
-  g+='<line x1="'+x0+'" y1="'+y0+'" x2="'+(x0+w)+'" y2="'+(y0-h)+'" stroke="var(--muted)" stroke-dasharray="4 4"/>';
-  g+='<polyline fill="none" stroke="var(--accent2)" stroke-width="2" points="'+pts.map(function(p){return p[0]+","+p[1]}).join(" ")+'"/>';
-  pts.forEach(function(p){var c=p[2]===2;g+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(c?6:3.5)+'" fill="'+(c?'var(--high)':'var(--accent2)')+'"/>'});
-  g+='<text x="'+(pts[2][0]+10)+'" y="'+(pts[2][1]+16)+'">≥ 2</text>';
-  g+='<text x="'+(x0+w/2)+'" y="294" text-anchor="middle">1 − especificidad</text>';
-  g+='<text transform="translate(12,'+(y0-h/2)+') rotate(-90)" text-anchor="middle">Sensibilidad</text>';
-  $("roc").innerHTML=g;
-})();
-
-var ids=["pcv","plt","wbc","alt"];
-var rules=[
- {id:"pcv",name:"Hematocrito ≥ 42 %",test:function(v){return v>=42}},
- {id:"plt",name:"Plaquetas ≤ 75 000",test:function(v){return v<=75000}},
- {id:"wbc",name:"Leucocitos ≥ 7 000",test:function(v){return v>=7000}},
- {id:"alt",name:"ALT ≥ 70 U/L",test:function(v){return v>=70}}
-];
-
-function calc(){
-  var total=0,missing=[],rows="";
-  rules.forEach(function(r){
-    var raw=$(r.id).value;
-    if(raw===""||isNaN(parseFloat(raw))){missing.push(r.name.split(" ")[0]);rows+='<li><span>'+r.name+'</span><span>sin dato</span></li>';return}
-    var yes=r.test(parseFloat(raw));
-    if(yes)total+=1;
-    rows+='<li class="'+(yes?'y':'')+'"><span>'+r.name+'</span><span>'+(yes?'+1':'0')+'</span></li>';
-  });
-  var hy=$("hypo").checked;
-  if(hy)total+=3;
-  rows+='<li class="'+(hy?'y':'')+'"><span>Hipotensión</span><span>'+(hy?'+3':'0')+'</span></li>';
-  $("score").textContent=total;
-  for(var i=0;i<7;i++)bar.children[i].classList.toggle("on",i<total);
-  $("parts").innerHTML=rows;
-  var cls="verdict",t,d;
-  if(total<=1){t="Riesgo bajo";d="Manejo ambulatorio según el estudio."}
-  else if(total===2){cls+=" v-mid";t="Riesgo aumentado";d="Observación hospitalaria según el estudio."}
-  else{cls+=" v-high";t="Riesgo alto";d="Cuidados intensivos y reanimación temprana según el estudio."}
-  $("verdict").className=cls;
-  $("vt").textContent=t;$("vd").textContent=d;
-  $("warn").textContent=missing.length?"Datos pendientes: "+missing.join(", ")+".":"";
-}
-ids.forEach(function(id){$(id).addEventListener("input",calc)});
-$("hypo").addEventListener("change",calc);
-$("reset").addEventListener("click",function(){ids.forEach(function(id){$(id).value=""});$("hypo").checked=false;calc()});
-calc();
-})();
-</script>
-</body>
-</html>
+.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:.78rem;color:#fff}
+.p-low{background:var(--low)}.p-mid{background:var(--mid)}.p-high{background:
