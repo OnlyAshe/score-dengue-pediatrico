@@ -63,4 +63,620 @@ th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--line)}
 th:first-child,td:first-child{text-align:left}
 tr.sel td{background:var(--bg);font-weight:600}
 .pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:.78rem;color:#fff}
-.p-low{background:var(--low)}.p-mid{background:var(--mid)}.p-high{background:
+.p-low{background:var(--low)}.p-mid{background:var(--mid)}.p-high{background:var(--high)}
+.m{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.m i{display:block;height:8px;background:var(--accent2);border-radius:2px}
+.m i.c{background:var(--c2)}
+svg text{fill:var(--muted);font:11px "IBM Plex Sans",sans-serif}
+.maps{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.maps label{font-size:.82rem;color:var(--muted);display:block;margin-bottom:3px}
+footer{margin-top:20px;font-size:.8rem;color:var(--muted)}
+a{color:var(--accent2)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header><div>
+<h1>Score de complicaciones en dengue pediátrico</h1>
+<p>Bhaskar M, et al. F1000Research 2022, 11:446</p>
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-t="calc">Calculadora</button>
+  <button role="tab" aria-selected="false" data-t="lote">Predicción por lotes</button>
+  <button role="tab" aria-selected="false" data-t="est">Datos del estudio</button>
+</div>
+</div></header>
+<main>
+
+<section id="calc">
+<div class="grid two">
+  <div class="card">
+    <h2>Datos del paciente</h2>
+    <div class="field"><label for="pcv">Hematocrito (%)</label><span class="tag">≥ 42 · +1</span><input id="pcv" type="number" inputmode="decimal" min="0" max="80" step="0.1"></div>
+    <div class="field"><label for="plt">Plaquetas (células/mm³)</label><span class="tag">≤ 75 000 · +1</span><input id="plt" type="number" inputmode="numeric" min="0" step="1000"></div>
+    <div class="field"><label for="wbc">Leucocitos más altos (células/mm³)</label><span class="tag">≥ 7 000 · +1</span><input id="wbc" type="number" inputmode="numeric" min="0" step="100"></div>
+    <div class="field"><label for="alt">ALT (U/L)</label><span class="tag">≥ 70 · +1</span><input id="alt" type="number" inputmode="decimal" min="0" step="1"></div>
+    <label class="check" for="hypo"><input id="hypo" type="checkbox">Hipotensión<span class="tag">+3</span></label>
+    <button id="reset" type="button">Borrar datos</button>
+  </div>
+  <div class="card" aria-live="polite">
+    <h2>Resultado</h2>
+    <div class="score"><b id="score">0</b><span>de 7</span></div>
+    <div class="bar" id="bar"></div>
+    <div class="mark"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
+    <div class="verdict" id="verdict"><strong id="vt"></strong><span id="vd"></span></div>
+    <ul class="parts" id="parts"></ul>
+    <p class="warn" id="warn"></p>
+  </div>
+</div>
+</section>
+
+<section id="lote" hidden>
+<div class="card">
+  <h2>Predicción por lotes</h2>
+  <p class="note">Carga un archivo CSV o Excel con una fila por paciente, o usa los datos del estudio. Si incluyes el resultado real, se calculan sensibilidad, especificidad, valores predictivos y AUC.</p>
+  <input id="file" type="file" accept=".csv,.tsv,.txt,.xlsx,.xls">
+  <button id="demo" type="button">Usar datos del estudio (303 niños)</button>
+  <div id="mapbox" hidden>
+    <h3>Asignación de columnas</h3>
+    <div class="maps" id="maps"></div>
+    <button id="run" class="pri" type="button">Calcular</button>
+  </div>
+  <p class="warn" id="lerr"></p>
+</div>
+<div id="lres" hidden>
+  <div class="card"><h2>Resumen</h2><div class="facts" id="lsum"></div>
+    <div id="lmet" hidden>
+      <h3>Desempeño con umbral ≥ 2 (frente al resultado real)</h3>
+      <div class="facts" id="lperf"></div>
+      <div class="grid eq" style="margin-top:14px">
+        <div class="scroll"><table><thead><tr><th>Puntaje</th><th>Pacientes</th><th>Complicados</th><th>% complicados</th></tr></thead><tbody id="lbys"></tbody></table></div>
+        <div class="scroll"><table style="min-width:240px"><thead><tr><th></th><th>Score ≥ 2</th><th>Score &lt; 2</th></tr></thead><tbody id="lconf"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+  <div class="card"><h2>Resultados por paciente</h2>
+    <p class="note" id="lnote"></p>
+    <div class="scroll"><table style="min-width:620px"><thead id="lhead"></thead><tbody id="lbody"></tbody></table></div>
+    <button id="dl" type="button">Descargar resultados (CSV)</button>
+  </div>
+</div>
+</section>
+
+<section id="est" hidden>
+<div class="card">
+  <h2>Desempeño del score (n = 303; 63 con dengue complicado)</h2>
+  <div class="facts">
+    <div><b>84,1 %</b><span>Sensibilidad</span></div><div><b>72,5 %</b><span>Especificidad</span></div>
+    <div><b>44,5 %</b><span>VPP</span></div><div><b>94,5 %</b><span>VPN</span></div>
+    <div><b>0,86</b><span>AUC (IC 95 %: 0,80 a 0,92)</span></div>
+  </div>
+  <div class="grid eq" style="align-items:start;margin-top:14px">
+    <svg id="roc" viewBox="0 0 320 300" width="100%" role="img" aria-label="Curva ROC del score"></svg>
+    <div class="scroll"><table><thead><tr><th>Umbral</th><th>Sensibilidad</th><th>Especificidad</th><th>Youden</th></tr></thead><tbody id="t4"></tbody></table></div>
+  </div>
+</div>
+<div class="grid eq">
+  <div class="card"><h2>Odds ratios ajustados</h2>
+    <svg id="forest" viewBox="0 0 340 210" width="100%" role="img" aria-label="Odds ratios ajustados con intervalo de confianza"></svg></div>
+  <div class="card"><h2>Distribución del puntaje por grupo</h2>
+    <svg id="dist" viewBox="0 0 340 210" width="100%" role="img" aria-label="Distribución del puntaje en cada grupo"></svg></div>
+</div>
+<div class="card"><h2>Proporción de complicados según cada factor (análisis bivariado)</h2>
+  <div class="scroll"><table style="min-width:520px"><thead><tr><th>Factor</th><th>Con el factor</th><th>Sin el factor</th><th>p</th></tr></thead><tbody id="biv"></tbody></table></div>
+</div>
+<div class="card"><h2>Cohorte</h2>
+  <p class="note" style="margin:0">303 niños de 0 a 18 años con dengue confirmado (NS1 e IgM) en dos hospitales terciarios de Mangalore, India, entre enero de 2016 y diciembre de 2020. Grupos según la clasificación de la OMS: 240 con dengue sin complicaciones y 63 con dengue complicado. Hubo 4 muertes. Los puntajes de cada predictor se obtuvieron dividiendo su coeficiente entre el menor (0,94). La validación fue solo interna.</p>
+</div>
+</section>
+
+<footer>Herramienta informativa. No sustituye el juicio clínico. Validación interna únicamente. <a href="https://doi.org/10.12688/f1000research.111214.1">doi.org/10.12688/f1000research.111214.1</a></footer>
+</main>
+
+<script>
+(function(){
+var DATA=`complicado,hematocrito,plaquetas,leucocitos_max,alt,hipotension
+1,46,30000,5100,53,1
+1,38.6,43000,5300,21,0
+0,35.5,129000,2600,12,0
+0,42.1,70000,4800,171,0
+0,41,184000,9100,45,0
+1,33.4,103000,2400,291,1
+0,39.6,158000,3000,18,0
+0,41.2,71000,4100,20,0
+0,42.4,59000,9100,11,0
+0,34.6,115000,4000,16,0
+0,37.4,130000,2000,21,0
+0,37.5,94000,3600,17,0
+0,45.7,87000,11400,145,1
+0,39,108000,5900,12,0
+1,41.9,104000,2600,34,0
+1,41.4,68000,6440,22.5,1
+0,36,104000,3600,31,0
+0,46,197000,2900,22,0
+1,41.1,23000,6300,118,1
+0,37.1,166000,7800,13,0
+0,39.8,72000,8400,30,0
+1,44.9,46000,7100,23,0
+0,36.8,190000,9100,13,0
+0,39.6,77000,6500,11,0
+1,36.5,31000,5700,87,1
+0,39.9,125000,5100,16,0
+0,41,110000,3100,20,0
+0,41.7,67000,9600,52,0
+0,39.7,174000,5900,19,0
+1,47.8,114000,3100,98,1
+0,40.7,78000,2000,18,0
+0,43.2,53000,6900,159,0
+0,40.1,64000,1700,114,0
+0,40.8,69000,5100,17,0
+0,41.6,40000,4600,35,0
+0,40.5,109000,3200,17,1
+0,49.2,84000,5000,14,0
+0,40.2,115000,6600,72,0
+0,39.8,119000,6600,31,0
+0,38.7,98000,12000,19,0
+0,39,67000,4800,24,1
+1,40.9,37000,7700,179,0
+0,39.2,95000,4100,29,0
+1,51.3,22000,9900,168,0
+1,38,88000,4000,9,0
+1,44.4,52000,7440,70,1
+0,42,63000,3800,13,0
+1,41.6,34000,10500,145,0
+0,38.2,86000,2700,20,0
+0,39.9,240000,4800,40,0
+0,40.5,54000,6400,21,0
+0,40.5,46000,3600,143,0
+0,38.2,44000,7200,11,0
+0,38.6,172000,3900,35,0
+0,37.4,156000,3500,112,0
+0,38.2,57000,1900,10,0
+0,41,72000,7100,28,0
+0,39,73000,10700,47,0
+0,42.7,112000,2200,124,0
+1,43.7,85000,6100,34,0
+0,36.6,98000,2700,23,0
+0,36.4,86000,6300,12,0
+1,45.7,153000,8500,12,1
+1,29.9,160000,5600,15,0
+0,38.9,93000,5800,13,0
+1,37.9,20000,5100,113,1
+0,40.3,144000,2900,32,0
+0,38.8,172000,2900,11,0
+0,37.6,146000,4500,24,0
+0,38.3,127000,2900,22,0
+0,36.4,55000,11800,20,0
+0,34.2,67000,4200,25,0
+0,42,152000,3800,14,0
+0,36.8,176000,3800,25,0
+1,52.1,13000,4500,41,1
+1,46.5,40000,2600,24,0
+0,43.6,177000,2900,15,0
+0,48,35000,3800,40,0
+0,38.3,94000,8300,38,0
+1,38.9,89000,7400,20,0
+0,40.7,88000,4000,263,0
+0,40.7,195000,5300,49,0
+1,45.3,15000,5000,77,0
+0,41.3,86000,6600,161,0
+0,33.1,100000,3900,40,0
+1,51.1,17000,4000,130,0
+1,44.4,44000,7900,151,0
+0,41.7,142000,4900,15,1
+1,46.3,26000,9000,331,1
+0,36.3,90000,5700,40,0
+0,39.5,127000,3400,35,0
+0,36.6,70000,3000,25,1
+0,39.9,91000,5200,33,0
+0,34.4,248000,6200,18,0
+0,43,80000,3600,121,0
+0,44.2,159000,6100,51,0
+0,37,87000,4900,30,0
+0,39.9,76000,8100,15,1
+0,41.4,56000,6300,45,0
+0,37.3,177000,9000,11,0
+0,38.7,16000,1800,53,0
+0,39.4,104000,5300,33,0
+0,45.9,32000,6200,56,0
+1,42.9,149000,8300,46,1
+1,40,61000,10100,188,1
+0,41,42000,9500,105,0
+1,41,71000,7800,38,1
+1,34.9,81000,3600,15,1
+0,33.6,249000,10700,13,0
+0,40.5,152000,2400,35,0
+1,43.4,13000,12600,447,1
+1,37.2,20000,6800,59,1
+0,36.6,237700,15400,20,0
+0,39,162000,5200,13,0
+0,40.1,232000,6400,17,0
+0,35,111000,9800,35,0
+0,44,106000,5500,34,0
+0,43.9,54000,2100,22,0
+0,40.9,55000,8600,71,0
+0,37.4,72000,2400,22,0
+0,40.6,87000,9200,34,0
+1,40,248000,10800,17,0
+0,39.3,122000,6200,107,0
+0,41,223000,5300,17,0
+0,39,89000,1800,21,0
+0,38.7,74000,3500,41,0
+0,43,54000,6000,34,0
+0,40.2,45000,9400,169,0
+0,39.1,29000,11100,27,0
+0,42.6,103000,1600,30,0
+1,36.4,173000,9500,50,1
+0,32.8,36000,2400,25,0
+0,36,203000,8600,25,0
+1,43.6,40000,4200,40,1
+0,42,95000,3600,31,0
+0,43.7,88000,3600,22,0
+0,33.4,98000,5100,34,0
+1,38.7,115000,7800,300,0
+0,33.8,167000,17500,76,0
+0,37.2,174000,4600,16,0
+0,34.9,33000,5500,14,0
+1,40.1,57000,6500,98,0
+1,39.1,76000,7900,44,0
+1,38,93000,11200,125,0
+0,39,71000,2500,14,0
+0,37.2,79000,7500,31,0
+0,30.8,217000,9100,30,0
+0,48.9,22000,5700,48,0
+0,39.2,152000,6900,169,0
+1,37,34000,7700,35,0
+0,40.3,116000,2100,26,0
+1,43,56000,4400,129,1
+0,49.6,52000,7770,25,0
+0,41.1,62000,2300,25,0
+0,40.8,59000,7400,73,0
+0,36,50000,5600,500,0
+0,37.3,91000,5000,70,0
+0,33,125000,3500,9,0
+1,49,15000,18600,1132,1
+1,41,27000,6280,255,1
+0,40.8,106000,6600,10,1
+1,45.6,11000,4600,306,1
+0,34.8,97000,22400,107,0
+0,34.7,416000,16200,25,0
+0,43.4,39000,4700,30,0
+0,39.6,135000,4000,30,0
+0,45.4,39000,4300,42,0
+0,41.3,99000,3700,34,0
+1,34.1,40000,6100,259,1
+0,34.4,61000,2700,28,0
+0,42.9,101000,8300,9,0
+0,41,25000,1900,18,0
+0,40.2,83000,2000,99,0
+0,39.3,144000,2800,9,0
+0,39.3,79000,4100,57,0
+0,38.7,157000,5400,13,1
+0,38,99000,4000,26,0
+0,38.1,39000,4500,6,0
+0,39,126000,5900,27,0
+0,41.5,73000,3500,90,0
+0,42.7,83000,6600,99,0
+0,37.8,187000,4000,15,0
+0,47,98000,4000,264,0
+0,34.6,100000,4000,23,0
+0,40.5,61000,3500,48,0
+0,40.2,45000,2900,30,0
+0,36.6,49000,10300,12,0
+0,38.8,57000,10700,33,0
+0,46.9,21000,3500,35,0
+0,32.7,57000,6500,95,0
+0,38.5,230000,9200,6,0
+0,28.5,191000,11200,18,0
+1,42.9,50000,5300,630,0
+0,40.9,89000,3900,34,0
+0,42.8,36000,6000,40,0
+0,45.1,39000,6200,18,0
+0,48.4,38000,4500,165,0
+0,45,83000,3500,15,0
+0,41.4,31000,6100,30,0
+0,37.8,148000,5000,12,0
+0,38.4,66000,1800,30,0
+0,37.2,60000,12900,49,0
+0,47.7,53000,3400,135,0
+0,45,160000,7400,14,0
+0,44.7,105000,5600,26,0
+1,33.3,41000,8800,28,0
+0,36.7,240000,7000,25,0
+0,37.1,174000,7500,11,0
+1,34.1,40000,6100,259,0
+1,37.7,48000,3600,27,0
+1,42,60000,3000,97,0
+0,39.2,116000,5300,74,0
+0,45,240000,8800,25,0
+0,43.6,111000,2900,14,0
+0,38.5,130000,6400,15,0
+0,43.8,83000,3500,17,0
+0,31.2,230000,7100,17,0
+0,42.4,88000,4600,22,0
+0,42,216000,4400,23,0
+0,35.8,145000,3900,28,0
+0,41.5,104000,4200,19,0
+0,32.6,172000,5900,18,0
+0,42.7,115000,6500,19,0
+0,41.1,92000,3100,16,0
+0,38.2,108000,3000,25,0
+0,42.3,101000,5100,14,0
+0,40.8,92000,3900,12,0
+1,34.7,479000,10500,608,0
+0,42.9,49000,1700,40,0
+1,44.9,46000,8900,35,0
+0,32.8,62000,2800,13,0
+0,39.8,49000,2400,21,0
+0,49.8,11000,5600,107,0
+0,40.9,154000,3200,5,0
+0,41.4,99000,2300,16,0
+0,39.5,71000,4000,13,0
+1,54.1,24000,11300,10,0
+0,41.8,307000,7400,11,0
+0,35.5,55000,8300,57,0
+0,40.9,222000,6400,22,0
+0,33.9,206000,4200,14,0
+0,38,156000,4700,57,0
+0,43.5,56000,3600,26,0
+1,39,185000,9100,896,0
+0,38.3,71000,3200,14,0
+0,39.4,132000,5600,10,0
+0,37.9,149000,7900,14,0
+0,38.4,127000,5300,32,0
+0,46.8,50000,3700,16,0
+0,37.5,96000,4000,9,0
+0,38,108000,1800,21,0
+0,40.9,90000,4000,40,0
+0,39.6,144000,5000,14,0
+0,39,67000,5000,89,0
+1,44.5,114000,3100,98,0
+0,39.3,129000,2500,16,0
+0,37.8,66000,6700,16,0
+0,34.7,269000,5300,13,0
+0,34,210000,6800,25,1
+1,38.3,113000,6100,19,0
+0,37.9,208000,5700,20,0
+0,41.3,53000,5300,235,0
+1,46.8,13000,3700,83,1
+0,37.8,90000,5000,24,0
+0,42.3,132000,6200,10,0
+0,40.4,124000,2700,26,0
+0,43.4,128000,8500,50,0
+0,38.5,115000,4200,22,0
+0,38.7,76000,3700,15,0
+1,45.9,71000,3900,12,0
+0,43.7,115000,5400,30,0
+0,30.1,399000,10000,30,0
+0,37.8,94000,5800,16,0
+0,43.6,177000,2900,15,0
+1,44.9,46000,1500,23,0
+0,38.5,79000,4300,33,0
+0,44.3,62000,5200,18,0
+0,43.4,98000,1700,136,0
+0,37.7,158000,4500,15,0
+0,44.2,94000,3100,76,0
+1,44.4,14000,5800,50,0
+0,40.5,103000,4300,40,0
+0,39.8,178000,5600,14,0
+0,43.5,120000,6700,,0
+0,38.5,129000,5800,16,0
+0,37.9,119000,5000,20,0
+0,36.8,52000,3600,23,0
+0,42.6,201000,3800,24,0
+0,36.6,173000,6500,11,0
+0,40,32000,4200,36,0
+0,38.8,102000,2800,12,0
+0,38.6,145000,12800,19,0
+0,40.3,59000,6000,20,0
+0,34.1,84000,2600,18,0
+0,39.8,190000,8100,25,0
+0,39.8,42000,2300,72,0
+0,40,98000,6200,15,0
+0,41.2,150000,3700,9,0
+0,40,52000,1800,65,0
+1,37.7,65000,7200,10,1
+1,38.7,37000,3200,160,1
+1,54.6,42000,24100,1481,1
+1,36.6,47000,6500,189,1`;
+var T4=[[0,100,0,0],[1,93.65,39.17,.33],[2,84.13,72.5,.57],[3,61.9,91.67,.54],[4,47.62,98.33,.46],[5,38.1,99.58,.38],[6,14.29,99.58,.14],[7,6.35,100,.06]];
+var OR=[["Hematocrito ≥ 42 %",2.56,1.04,6.33],["Plaquetas ≤ 75 000",2.89,1.30,6.39],["Leucocitos ≥ 7 000",3.19,1.39,7.33],["ALT ≥ 70 U/L",2.92,1.24,6.90],["Hipotensión",20.11,7.50,53.89]];
+var BIV=[["Hipotensión",76.3,12.8,"&lt; 0,001"],["Sangrado",83.3,19.5,"&lt; 0,001"],["Organomegalia",77.8,19.0,"&lt; 0,001"],["ALT ≥ 70 U/L",47.8,13.1,"&lt; 0,001"],["Plaquetas ≤ 75 000",36.4,10.4,"&lt; 0,001"],["Leucocitos ≥ 7 000",36.0,15.8,"&lt; 0,001"],["Hematocrito ≥ 42 %",35.4,15.6,"&lt; 0,001"],["Fiebre ≥ 6 días",30.9,17.9,"0,020"],["Vómitos",27.6,15.9,"0,014"]];
+var $=function(id){return document.getElementById(id)};
+var f=function(n){return String(n).replace(".",",")};
+var pct=function(x){return f((100*x).toFixed(1))+" %"};
+var risk=function(s){return s<=1?["Bajo","p-low"]:s===2?["Aumentado","p-mid"]:["Alto","p-high"]};
+
+/* pestañas */
+document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){
+  document.querySelectorAll(".tabs button").forEach(function(x){x.setAttribute("aria-selected",x===b)});
+  ["calc","lote","est"].forEach(function(id){$(id).hidden=id!==b.dataset.t});
+})});
+
+/* calculadora */
+var bar=$("bar");for(var i=0;i<7;i++)bar.appendChild(document.createElement("i"));
+var ids=["pcv","plt","wbc","alt"];
+var rules=[
+ {id:"pcv",name:"Hematocrito ≥ 42 %",test:function(v){return v>=42}},
+ {id:"plt",name:"Plaquetas ≤ 75 000",test:function(v){return v<=75000}},
+ {id:"wbc",name:"Leucocitos ≥ 7 000",test:function(v){return v>=7000}},
+ {id:"alt",name:"ALT ≥ 70 U/L",test:function(v){return v>=70}}
+];
+function calc(){
+  var total=0,missing=[],rows="";
+  rules.forEach(function(r){
+    var raw=$(r.id).value;
+    if(raw===""||isNaN(parseFloat(raw))){missing.push(r.name.split(" ")[0]);rows+='<li><span>'+r.name+'</span><span>sin dato</span></li>';return}
+    var yes=r.test(parseFloat(raw));if(yes)total+=1;
+    rows+='<li class="'+(yes?'y':'')+'"><span>'+r.name+'</span><span>'+(yes?'+1':'0')+'</span></li>';
+  });
+  var hy=$("hypo").checked;if(hy)total+=3;
+  rows+='<li class="'+(hy?'y':'')+'"><span>Hipotensión</span><span>'+(hy?'+3':'0')+'</span></li>';
+  $("score").textContent=total;
+  for(var i=0;i<7;i++)bar.children[i].classList.toggle("on",i<total);
+  $("parts").innerHTML=rows;
+  var cls="verdict",t,d;
+  if(total<=1){t="Riesgo bajo";d="Manejo ambulatorio según el estudio."}
+  else if(total===2){cls+=" v-mid";t="Riesgo aumentado";d="Observación hospitalaria según el estudio."}
+  else{cls+=" v-high";t="Riesgo alto";d="Cuidados intensivos y reanimación temprana según el estudio."}
+  $("verdict").className=cls;$("vt").textContent=t;$("vd").textContent=d;
+  $("warn").textContent=missing.length?"Datos pendientes: "+missing.join(", ")+".":"";
+}
+ids.forEach(function(id){$(id).addEventListener("input",calc)});
+$("hypo").addEventListener("change",calc);
+$("reset").addEventListener("click",function(){ids.forEach(function(id){$(id).value=""});$("hypo").checked=false;calc()});
+calc();
+
+/* lotes */
+function num(v){var n=parseFloat(String(v==null?"":v).replace(/\s/g,"").replace(",","."));return isNaN(n)?null:n}
+function yes(v,mode){
+  v=String(v==null?"":v).trim().toLowerCase();if(v==="")return null;
+  if(mode==="2")return parseFloat(v)===2;
+  if(["1","si","sí","yes","y","s","true","verdadero"].indexOf(v)>=0)return true;
+  if(["0","no","n","false","falso"].indexOf(v)>=0)return false;
+  return null;
+}
+function scoreOf(pcv,plt,wbc,alt,hy){
+  var s=0,miss=0;
+  [[pcv,function(v){return v>=42}],[plt,function(v){return v<=75000}],[wbc,function(v){return v>=7000}],[alt,function(v){return v>=70}]].forEach(function(p){
+    if(p[0]===null)miss++;else if(p[1](p[0]))s++;
+  });
+  if(hy===null)miss++;else if(hy)s+=3;
+  return {s:s,miss:miss};
+}
+function parseCSV(t){
+  t=t.replace(/^\uFEFF/,"");
+  var first=t.split(/\r?\n/)[0],d=[";","\t",","].reduce(function(a,c){return first.split(c).length>first.split(a).length?c:a},",");
+  var out=[],row=[],cur="",q=false;
+  for(var i=0;i<t.length;i++){var c=t[i];
+    if(q){if(c==='"'){if(t[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}
+    else if(c==='"')q=true;
+    else if(c===d){row.push(cur);cur=""}
+    else if(c==="\n"){row.push(cur.replace(/\r$/,""));out.push(row);row=[];cur=""}
+    else cur+=c;
+  }
+  if(cur!==""||row.length){row.push(cur);out.push(row)}
+  return out;
+}
+var FIELDS=[["pcv","Hematocrito (%)"],["plt","Plaquetas"],["wbc","Leucocitos más altos"],["alt","ALT"],["hypo","Hipotensión"],["out","Resultado real (opcional)"]];
+var H=[],R=[],RES=[];
+function detect(k){
+  var re=function(r){return function(x){return r.test(x)}};
+  if(k==="pcv")return H.findIndex(re(/pcv|hemat/i));
+  if(k==="plt")return H.findIndex(re(/plat/i));
+  if(k==="wbc"){var i=H.findIndex(function(x){return /wbc|leuc/i.test(x)&&/high|alto|max/i.test(x)});
+    return i>=0?i:H.findIndex(function(x){return /wbc|leuc/i.test(x)&&!/low|bajo|min/i.test(x)})}
+  if(k==="alt")return H.findIndex(re(/\balt\b|^alt|tgp|gpt/i));
+  if(k==="hypo")return H.findIndex(re(/hipot|\bbp\b|blood|presi/i));
+  return H.findIndex(re(/group|grupo|complic|resultado|outcome/i));
+}
+function load(arr){
+  $("lerr").textContent="";$("lres").hidden=true;
+  if(arr.length<2){$("lerr").textContent="El archivo no tiene filas de datos.";return}
+  H=arr[0].map(function(x){return String(x).trim()});
+  R=arr.slice(1).filter(function(r){return r.some(function(c){return String(c).trim()!==""})});
+  var h="";
+  FIELDS.forEach(function(p){
+    var d=detect(p[0]);
+    h+='<div><label for="m_'+p[0]+'">'+p[1]+'</label><select id="m_'+p[0]+'"><option value="-1">(no usar)</option>'+
+      H.map(function(x,i){return '<option value="'+i+'"'+(i===d?' selected':'')+'>'+x.replace(/</g,"&lt;")+'</option>'}).join("")+'</select></div>';
+    if(p[0]==="hypo")h+='<div><label for="m_hm">Codificación de hipotensión</label><select id="m_hm"><option value="1">1, sí, true = hipotensión</option><option value="2">2 = hipotensión (Excel del estudio)</option></select></div>';
+    if(p[0]==="out")h+='<div><label for="m_om">Codificación del resultado</label><select id="m_om"><option value="1">1, sí, true = complicado</option><option value="2">2 = complicado (Excel del estudio)</option></select></div>';
+  });
+  $("maps").innerHTML=h;$("mapbox").hidden=false;
+}
+$("file").addEventListener("change",function(e){
+  var fl=e.target.files[0];if(!fl)return;
+  var ext=fl.name.split(".").pop().toLowerCase(),rd=new FileReader();
+  if(ext==="xlsx"||ext==="xls"){
+    if(typeof XLSX==="undefined"){$("lerr").textContent="No se pudo cargar el lector de Excel. Guarda el archivo como CSV e inténtalo de nuevo.";return}
+    rd.onload=function(){try{var wb=XLSX.read(rd.result,{type:"array"});load(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:""}))}catch(x){$("lerr").textContent="No se pudo leer el archivo."}};
+    rd.readAsArrayBuffer(fl);
+  }else{rd.onload=function(){load(parseCSV(rd.result))};rd.readAsText(fl)}
+});
+$("demo").addEventListener("click",function(){load(parseCSV(DATA));$("run").click()});
+$("run").addEventListener("click",function(){
+  var g=function(k){return parseInt($("m_"+k).value,10)};
+  var c={pcv:g("pcv"),plt:g("plt"),wbc:g("wbc"),alt:g("alt"),hypo:g("hypo"),out:g("out")};
+  if(c.pcv<0&&c.plt<0&&c.wbc<0&&c.alt<0&&c.hypo<0){$("lerr").textContent="Asigna al menos una columna de predictores.";return}
+  $("lerr").textContent="";
+  var hm=$("m_hm").value,om=$("m_om").value;
+  RES=R.map(function(r,i){
+    var v=function(k){return c[k]>=0?r[c[k]]:null};
+    var p=[num(v("pcv")),num(v("plt")),num(v("wbc")),num(v("alt"))],hy=c.hypo>=0?yes(v("hypo"),hm):null;
+    var sc=scoreOf(p[0],p[1],p[2],p[3],hy);
+    return {i:i+1,p:p,hy:hy,s:sc.s,miss:sc.miss,o:c.out>=0?yes(v("out"),om):null};
+  });
+  render(c.out>=0);
+});
+function render(hasOut){
+  var n=RES.length,cnt=[0,0,0],inc=0;
+  RES.forEach(function(x){cnt[x.s<=1?0:x.s===2?1:2]++;if(x.miss)inc++});
+  $("lsum").innerHTML='<div><b>'+n+'</b><span>Pacientes</span></div><div><b>'+cnt[0]+'</b><span>Riesgo bajo (0 a 1)</span></div><div><b>'+cnt[1]+'</b><span>Aumentado (2)</span></div><div><b>'+cnt[2]+'</b><span>Alto (3 a 7)</span></div><div><b>'+inc+'</b><span>Con datos incompletos</span></div>';
+  var ev=RES.filter(function(x){return x.o!==null});
+  $("lmet").hidden=!(hasOut&&ev.length);
+  if(hasOut&&ev.length){
+    var pos=[0,0,0,0,0,0,0,0],neg=[0,0,0,0,0,0,0,0],tp=0,fn=0,fp=0,tn=0;
+    ev.forEach(function(x){(x.o?pos:neg)[x.s]++;if(x.o){x.s>=2?tp++:fn++}else{x.s>=2?fp++:tn++}});
+    var P=tp+fn,N=fp+tn,auc="",a=0,cum=0;
+    if(P&&N){for(var k=0;k<8;k++){a+=pos[k]*(cum+0.5*neg[k]);cum+=neg[k]}auc=f((a/(P*N)).toFixed(2))}
+    var d=function(a,b){return b?pct(a/b):"n/d"};
+    $("lperf").innerHTML='<div><b>'+d(tp,P)+'</b><span>Sensibilidad</span></div><div><b>'+d(tn,N)+'</b><span>Especificidad</span></div><div><b>'+d(tp,tp+fp)+'</b><span>VPP</span></div><div><b>'+d(tn,tn+fn)+'</b><span>VPN</span></div><div><b>'+(auc||"n/d")+'</b><span>AUC</span></div>';
+    var rows="";for(var s=0;s<8;s++){var t=pos[s]+neg[s];rows+='<tr><td>'+s+'</td><td>'+t+'</td><td>'+pos[s]+'</td><td>'+(t?pct(pos[s]/t):"–")+'</td></tr>'}
+    $("lbys").innerHTML=rows;
+    $("lconf").innerHTML='<tr><td>Complicado</td><td>'+tp+'</td><td>'+fn+'</td></tr><tr><td>Sin complicaciones</td><td>'+fp+'</td><td>'+tn+'</td></tr>';
+  }
+  $("lhead").innerHTML='<tr><th>#</th><th>Hematocrito</th><th>Plaquetas</th><th>Leucocitos</th><th>ALT</th><th>Hipotensión</th><th>Puntaje</th><th>Riesgo</th>'+(hasOut?'<th>Real</th>':'')+'</tr>';
+  var show=RES.slice(0,100),cell=function(v){return v===null?"–":f(v)};
+  $("lbody").innerHTML=show.map(function(x){var r=risk(x.s);
+    return '<tr><td>'+x.i+'</td><td>'+cell(x.p[0])+'</td><td>'+cell(x.p[1])+'</td><td>'+cell(x.p[2])+'</td><td>'+cell(x.p[3])+'</td><td>'+(x.hy===null?"–":x.hy?"Sí":"No")+'</td><td><b>'+x.s+'</b></td><td><span class="pill '+r[1]+'">'+r[0]+'</span></td>'+(hasOut?'<td>'+(x.o===null?"–":x.o?"Complicado":"Sin compl.")+'</td>':'')+'</tr>'}).join("");
+  $("lnote").textContent=(n>100?"Se muestran los primeros 100 de "+n+" pacientes. ":"")+(inc?"Los valores ausentes no suman puntos, por lo que el puntaje de esas filas puede estar subestimado.":"");
+  $("lres").hidden=false;$("lres").scrollIntoView({behavior:"smooth",block:"start"});
+}
+$("dl").addEventListener("click",function(){
+  var l=["paciente,hematocrito,plaquetas,leucocitos,alt,hipotension,puntaje,riesgo,datos_incompletos,resultado_real"];
+  RES.forEach(function(x){l.push([x.i].concat(x.p.map(function(v){return v===null?"":v}),[x.hy===null?"":x.hy?1:0,x.s,risk(x.s)[0],x.miss?1:0,x.o===null?"":x.o?1:0]).join(","))});
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+l.join("\n")],{type:"text/csv"}));a.download="resultados_score_dengue.csv";a.click();
+});
+
+/* gráficos del estudio */
+$("t4").innerHTML=T4.map(function(r){return '<tr'+(r[0]===2?' class="sel"':'')+'><td>≥ '+r[0]+'</td><td>'+f(r[1].toFixed(1))+' %</td><td>'+f(r[2].toFixed(1))+' %</td><td>'+f(r[3].toFixed(2))+'</td></tr>'}).join("");
+(function(){
+  var x0=44,y0=262,w=250,h=235,g="";
+  var pts=T4.map(function(r){return [x0+(1-r[2]/100)*w,y0-(r[1]/100)*h,r[0]]});
+  [0,.25,.5,.75,1].forEach(function(v){
+    g+='<line x1="'+x0+'" x2="'+(x0+w)+'" y1="'+(y0-v*h)+'" y2="'+(y0-v*h)+'" stroke="var(--line)"/><text x="'+(x0-6)+'" y="'+(y0-v*h+4)+'" text-anchor="end">'+f(v.toFixed(2))+'</text><text x="'+(x0+v*w)+'" y="'+(y0+16)+'" text-anchor="middle">'+f(v.toFixed(2))+'</text>';
+  });
+  g+='<line x1="'+x0+'" y1="'+y0+'" x2="'+(x0+w)+'" y2="'+(y0-h)+'" stroke="var(--muted)" stroke-dasharray="4 4"/><polyline fill="none" stroke="var(--accent2)" stroke-width="2" points="'+pts.map(function(p){return p[0]+","+p[1]}).join(" ")+'"/>';
+  pts.forEach(function(p){var c=p[2]===2;g+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(c?6:3.5)+'" fill="'+(c?'var(--high)':'var(--accent2)')+'"/>'});
+  g+='<text x="'+(pts[2][0]+10)+'" y="'+(pts[2][1]+16)+'">≥ 2</text><text x="'+(x0+w/2)+'" y="294" text-anchor="middle">1 − especificidad</text><text transform="translate(12,'+(y0-h/2)+') rotate(-90)" text-anchor="middle">Sensibilidad</text>';
+  $("roc").innerHTML=g;
+})();
+(function(){ /* forest plot, eje logarítmico */
+  var x0=130,w=190,mn=Math.log(0.5),mx=Math.log(64),X=function(v){return x0+(Math.log(v)-mn)/(mx-mn)*w},g="";
+  [1,2,4,8,16,32,64].forEach(function(t){g+='<line x1="'+X(t)+'" x2="'+X(t)+'" y1="10" y2="170" stroke="var(--line)"/><text x="'+X(t)+'" y="186" text-anchor="middle">'+t+'</text>'});
+  g+='<line x1="'+X(1)+'" x2="'+X(1)+'" y1="10" y2="170" stroke="var(--muted)" stroke-dasharray="4 3"/>';
+  OR.forEach(function(r,i){var y=30+i*32;
+    g+='<text x="'+(x0-8)+'" y="'+(y+4)+'" text-anchor="end">'+r[0]+'</text><line x1="'+X(r[2])+'" x2="'+X(r[3])+'" y1="'+y+'" y2="'+y+'" stroke="var(--accent2)" stroke-width="2"/><circle cx="'+X(r[1])+'" cy="'+y+'" r="5" fill="var(--accent2)"/><text x="'+X(r[3])+'" y="'+(y-8)+'" text-anchor="end">'+f(r[1].toFixed(2))+'</text>';
+  });
+  g+='<text x="'+(x0+w/2)+'" y="204" text-anchor="middle">Odds ratio (escala logarítmica)</text>';
+  $("forest").innerHTML=g;
+})();
+$("biv").innerHTML=BIV.map(function(r){
+  var m=function(v,c){return '<div class="m"><i class="'+c+'" style="width:'+v*0.6+'px"></i>'+f(v.toFixed(1))+' %</div>'};
+  return '<tr><td>'+r[0]+'</td><td>'+m(r[1],"c")+'</td><td>'+m(r[2],"")+'</td><td>'+r[3]+'</td></tr>'}).join("");
+(function(){ /* distribución del puntaje en la cohorte */
+  var rows=parseCSV(DATA).slice(1),u=[0,0,0,0,0,0,0,0],c=[0,0,0,0,0,0,0,0],nu=0,nc=0;
+  rows.forEach(function(r){if(r.length<6)return;
+    var s=scoreOf(num(r[1]),num(r[2]),num(r[3]),num(r[4]),r[5]==="1").s;
+    if(r[0]==="1"){c[s]++;nc++}else{u[s]++;nu++}});
+  var x0=34,y0=170,h=140,bw=15,g="",mx=0.4;
+  [0,.1,.2,.3,.4].forEach(function(v){g+='<line x1="'+x0+'" x2="330" y1="'+(y0-v/mx*h)+'" y2="'+(y0-v/mx*h)+'" stroke="var(--line)"/><text x="'+(x0-6)+'" y="'+(y0-v/mx*h+4)+'" text-anchor="end">'+Math.round(v*100)+' %</text>'});
+  for(var s=0;s<8;s++){var bx=x0+10+s*37,pu=u[s]/nu,pc=c[s]/nc;
+    g+='<rect x="'+bx+'" y="'+(y0-pu/mx*h)+'" width="'+bw+'" height="'+(pu/mx*h)+'" fill="var(--accent2)"/><rect x="'+(bx+bw+1)+'" y="'+(y0-pc/mx*h)+'" width="'+bw+'" height="'+(pc/mx*h)+'" fill="var(--c2)"/><text x="'+(bx+bw)+'" y="188" text-anchor="middle">'+s+'</text>'}
+  g+='<rect x="170" y="2" width="10" height="10" fill="var(--accent2)"/><text x="184" y="11">Sin complicaciones</text><rect x="270" y="2" width="10" height="10" fill="var(--c2)"/><text x="284" y="11">Complicado</text><text x="'+(x0+148)+'" y="205" text-anchor="middle">Puntaje</text>';
+  $("dist").innerHTML=g;
+})();
+})();
+</script>
+</body>
+</html>
