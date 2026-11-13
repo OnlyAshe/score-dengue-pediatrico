@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -7,44 +7,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-:root{--bg:
-#f4f6f8;--surface:#fff;--ink:
-#16222b;--muted:
-#5d6d78;--line:
-#d8e0e6;--accent2:
-#1d6f9a;--low:
-#1f7a4d;--mid:
-#a86400;--high:
-#b3261e;--seg:
-#e2e8ec;--head:
-#12425e;--c2:
-#b3261e;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:
-#0f171d;--surface:
-#16222b;--ink:
-#e8eef2;--muted:
-#9aabb6;--line:
-#2a3a46;--accent2:
-#6bb6e0;--low:
-#4cc38a;--mid:
-#f0b34a;--high:
-#ff8a80;--seg:
-#26363f;--head:
-#0b1217;--c2:
-#ff8a80;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:
-#0f171d;--surface:
-#16222b;--ink:
-#e8eef2;--muted:
-#9aabb6;--line:
-#2a3a46;--accent2:
-#6bb6e0;--low:
-#4cc38a;--mid:
-#f0b34a;--high:
-#ff8a80;--seg:
-#26363f;--head:
-#0b1217;--c2:
-#ff8a80;color-scheme:dark}
+:root{--bg:#f4f6f8;--surface:#fff;--ink:#16222b;--muted:#5d6d78;--line:#d8e0e6;--accent2:#1d6f9a;--low:#1f7a4d;--mid:#a86400;--high:#b3261e;--seg:#e2e8ec;--head:#12425e;--c2:#b3261e;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f171d;--surface:#16222b;--ink:#e8eef2;--muted:#9aabb6;--line:#2a3a46;--accent2:#6bb6e0;--low:#4cc38a;--mid:#f0b34a;--high:#ff8a80;--seg:#26363f;--head:#0b1217;--c2:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f171d;--surface:#16222b;--ink:#e8eef2;--muted:#9aabb6;--line:#2a3a46;--accent2:#6bb6e0;--low:#4cc38a;--mid:#f0b34a;--high:#ff8a80;--seg:#26363f;--head:#0b1217;--c2:#ff8a80;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums}
 header{background:var(--head);color:#fff;padding:calc(22px + env(safe-area-inset-top,0px)) 16px 0}
@@ -108,14 +73,9 @@ svg text{fill:var(--muted);font:11px "IBM Plex Sans",sans-serif}
 footer{margin-top:20px;font-size:.8rem;color:var(--muted)}
 a{color:var(--accent2)}
 [hidden]{display:none!important}
-header{background:linear-gradient(90deg,
-#0a1824,
-#12425e)}
+header{background:linear-gradient(90deg,#0a1824,#12425e)}
 input[type=text]{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
-.hero{background:linear-gradient(120deg,
-#0a1824,
-#12425e 70%,
-#1d6f9a);color:#fff;border-radius:10px;padding:28px 22px;margin-bottom:16px}
+.hero{background:linear-gradient(120deg,#0a1824,#12425e 70%,#1d6f9a);color:#fff;border-radius:10px;padding:28px 22px;margin-bottom:16px}
 .hero h2{font-size:clamp(1.4rem,4vw,2.1rem);border:0;padding:0;margin:12px 0;line-height:1.2;max-width:26ch;color:#fff}
 .hero p{max-width:62ch;opacity:.85;margin:0 0 16px}
 .badge{display:inline-block;font-size:.75rem;padding:3px 10px;border:1px solid rgba(255,255,255,.35);border-radius:12px}
@@ -132,17 +92,12 @@ input[type=text]{width:100%;font:inherit;padding:9px 10px;border:1px solid var(-
 .steps{margin:0;padding-left:20px;font-size:.9rem}.steps li{margin-bottom:6px}
 
 /* ===== tema visual ===== */
-:root{--rc:var(--low);--shadow:0 1px 2px rgba(16,40,56,.06),0 10px 28px rgba(16,40,56,.08);--grad:linear-gradient(135deg,
-#1d6f9a,
-#168f87)}
+:root{--rc:var(--low);--shadow:0 1px 2px rgba(16,40,56,.06),0 10px 28px rgba(16,40,56,.08);--grad:linear-gradient(135deg,#1d6f9a,#168f87)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--shadow:0 10px 28px rgba(0,0,0,.35)}}
 :root[data-theme="dark"]{--shadow:0 10px 28px rgba(0,0,0,.35)}
 body{background:radial-gradient(900px 420px at 88% -120px,rgba(29,111,154,.16),transparent),radial-gradient(700px 420px at -10% 30%,rgba(22,143,135,.09),transparent),var(--bg);background-attachment:fixed}
 h1,h2,h3,.kpi b,.ring b,.facts b,.hero h2{font-family:"Manrope","IBM Plex Sans",system-ui,sans-serif}
-header{background:linear-gradient(110deg,
-#07141d,
-#0f3a55 60%,
-#146b7a);padding-bottom:0}
+header{background:linear-gradient(110deg,#07141d,#0f3a55 60%,#146b7a);padding-bottom:0}
 .brand{display:flex;align-items:center;gap:14px;margin-bottom:16px}
 .brand h1{font-weight:800;letter-spacing:-.01em}
 .brand p{margin:2px 0 0;font-size:.85rem;opacity:.75}
@@ -150,29 +105,22 @@ header{background:linear-gradient(110deg,
 .tabs{display:inline-flex;max-width:100%;background:rgba(255,255,255,.1);border-radius:999px;padding:4px;margin-bottom:18px;backdrop-filter:blur(6px)}
 .tabs button{border-radius:999px;padding:8px 16px;font-size:.88rem;opacity:.8;transition:background .2s,color .2s}
 .tabs button:hover{opacity:1;background:rgba(255,255,255,.12)}
-.tabs button[aria-selected=true]{background:#fff;color:
-#0e2a3b;opacity:1;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.tabs button[aria-selected=true]{background:#fff;color:#0e2a3b;opacity:1;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 main{padding-top:24px}
 .card{border-radius:16px;box-shadow:var(--shadow);padding:22px}
 h2{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;border-bottom:0;padding-bottom:0;margin-bottom:16px}
 h2::before{content:"";flex:none;width:4px;height:18px;border-radius:2px;background:var(--grad)}
 h3{text-transform:uppercase;letter-spacing:.06em;font-size:.74rem}
-.hero{position:relative;overflow:hidden;border-radius:20px;padding:36px 28px;box-shadow:var(--shadow);background:linear-gradient(120deg,
-#07141d,
-#0f3a55 55%,
-#168f87)}
+.hero{position:relative;overflow:hidden;border-radius:20px;padding:36px 28px;box-shadow:var(--shadow);background:linear-gradient(120deg,#07141d,#0f3a55 55%,#168f87)}
 .hero::before{content:"";position:absolute;left:0;right:0;bottom:0;height:110px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 80' preserveAspectRatio='none'%3E%3Cpath d='M0 40h170l20-32 30 64 26-48 14 16h340' fill='none' stroke='white' stroke-opacity='.16' stroke-width='2'/%3E%3C/svg%3E") center/cover no-repeat}
 .hero::after{content:"";position:absolute;right:-70px;top:-70px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.2),transparent 70%)}
 .hero>*{position:relative;z-index:1}
 .hero h2::before{display:none}
 .hero h2{font-size:clamp(1.7rem,5vw,2.6rem);font-weight:800;letter-spacing:-.02em;max-width:20ch}
-.hero h2 em{font-style:normal;background:linear-gradient(90deg,
-#7fd6ff,
-#7ff0cf);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h2 em{font-style:normal;background:linear-gradient(90deg,#7fd6ff,#7ff0cf);-webkit-background-clip:text;background-clip:text;color:transparent}
 .badge{background:rgba(255,255,255,.1);backdrop-filter:blur(4px)}
 .hero button{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4);backdrop-filter:blur(4px)}
-.hero button.pri{background:#fff;color:
-#0e2a3b;border-color:#fff}
+.hero button.pri{background:#fff;color:#0e2a3b;border-color:#fff}
 button{border-radius:999px;padding:10px 20px;transition:transform .15s,box-shadow .15s,border-color .15s}
 button:hover{transform:translateY(-1px)}
 button.pri{background:var(--grad);border:0;color:#fff;box-shadow:0 6px 16px rgba(22,120,140,.35)}
@@ -209,6 +157,64 @@ svg rect{rx:3px}
 footer{text-align:center;padding-top:18px;border-top:1px solid var(--line)}
 @media(prefers-reduced-motion:no-preference){section:not([hidden]){animation:in .35s ease}@keyframes in{from{opacity:0;transform:translateY(8px)}}}
 @media(max-width:600px){.hero{padding:26px 18px}.ring{width:140px;height:140px}.ring>div{width:110px;height:110px}.ring b{font-size:2.8rem}}
+.check.mini{padding:10px 12px;font-weight:400}
+details.more{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}
+details.more summary{cursor:pointer;font-weight:600}
+.p-info{background:var(--accent2)}.p-gray{background:var(--muted)}
+tbody tr.hit td{background:color-mix(in srgb,var(--high) 7%,var(--surface))}
+tbody tr.hit td:first-child{font-weight:600}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill{color:#08151c}}
+:root[data-theme="dark"] .pill{color:#08151c}
+.check:has(input:disabled){opacity:.75}
+input[aria-invalid=true]{border-color:var(--high)}
+@media print{header,button,details.more,footer,#inicio,#eda,#est,#lote,.hero{display:none!important}body{background:#fff}.card{box-shadow:none;break-inside:avoid}.ring{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+.rm{padding:4px 12px;margin:0;font-size:.78rem}
+.mb{display:inline-block;font-size:.65rem;font-weight:600;color:var(--accent2);background:color-mix(in srgb,var(--accent2) 14%,transparent);border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:middle}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chips .check.mini{border-radius:999px;padding:8px 14px;margin:0;font-size:.88rem}
+.cbox{margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.88rem;margin:0}.dl dt{color:var(--muted)}.dl dd{margin:0}
+.cn{display:grid;grid-template-columns:96px 1fr 52px;gap:8px;align-items:center;font-size:.85rem;margin:5px 0}
+.cn.off{color:var(--muted)}.cn .tk{height:8px;background:var(--seg);border-radius:4px;overflow:hidden}.cn .tk i{display:block;height:100%}.cn b{text-align:right}
+.crit{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:14px}
+.crit label{font-size:.85rem;color:var(--muted);display:flex;gap:8px;align-items:center}
+.crit select{width:auto;padding:7px 10px}.crit input[type=range]{width:170px}.crit button{margin:0}
+.tools{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px}
+.tools button{margin:0 0 0 8px}
+.tg{display:inline-flex;background:var(--bg);border-radius:999px;padding:4px}
+.tg button{margin:0;border:0;padding:7px 14px;font-size:.85rem;color:var(--muted);background:transparent}
+.tg button.on{background:var(--ink);color:var(--surface)}
+.dist{display:flex;height:10px;border-radius:5px;overflow:hidden;margin:12px 0 4px;background:var(--seg)}
+.dist i{display:block;transition:flex .4s}.dist i:nth-child(1){background:var(--high)}.dist i:nth-child(2){background:var(--low)}
+.cg{display:grid;gap:14px}@media(min-width:900px){.cg{grid-template-columns:1.4fr 1fr}}
+.chart{--c:.28;border:1px solid var(--line);border-radius:12px;padding:12px}
+.cax,.cr{display:grid;grid-template-columns:96px 1fr 64px;align-items:center;gap:8px}
+.cax{font-size:.72rem;color:var(--muted);margin-bottom:8px}
+.cat{position:relative;height:14px}.cat span{position:absolute;transform:translateX(-50%)}
+.cr,.cr:hover{width:100%;margin:0;padding:3px 6px;border:0;border-radius:8px;background:transparent;text-align:left;font-weight:400;height:34px;transform:none}
+.cr:hover{background:var(--bg)}
+.cr.sel{background:color-mix(in srgb,var(--accent2) 14%,transparent);outline:1px solid var(--accent2)}
+.cr .cl{font-size:.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ct{position:relative;height:14px;background:var(--seg);border-radius:7px}
+.ct::after{content:"";position:absolute;left:calc(var(--c)*100%);top:-5px;bottom:-5px;border-left:2px dashed var(--ink)}
+.cb{position:absolute;left:0;top:0;bottom:0;border-radius:7px;background:var(--low)}
+.cr.hi .cb{background:var(--high)}.cr.e .cb{display:none}
+.cd{position:absolute;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border:2px solid var(--ink);border-radius:50%;background:var(--surface)}
+.cv{font-size:.8rem;text-align:right;font-weight:600}
+.leg2{display:flex;flex-wrap:wrap;gap:14px;font-size:.78rem;color:var(--muted);margin:10px 0 0}
+.leg2 i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+.ed{border:1px solid var(--line);border-radius:12px;padding:14px;font-size:.88rem}
+.ed .empty{color:var(--muted);margin:0}
+.eh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}.eh h4{margin:0;font-size:1rem}
+.ef{margin:12px 0}.ef .t{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.ef .t label{font-size:.84rem;font-weight:500;margin:0}.ef .t span{display:block;font-weight:400;color:var(--muted);font-size:.75rem}
+.ef .t input{width:110px;padding:6px 8px}.ef input[type=range]{width:100%;margin-top:6px}
+.ef.on .t span{color:var(--mid);font-weight:600}
+.etg{width:100%;margin:6px 0;display:flex;justify-content:space-between;border-radius:10px}
+.etg[aria-pressed=true]{border-color:var(--high);background:color-mix(in srgb,var(--high) 10%,var(--surface))}
+.ed button:not(.etg){margin:6px 8px 0 0;padding:7px 14px}
+td.x{background:color-mix(in srgb,var(--mid) 20%,transparent)!important;font-weight:600}
+tbody tr[data-i]{cursor:pointer}tbody tr.selrow td{background:color-mix(in srgb,var(--accent2) 14%,var(--surface))!important}
 </style>
 </head>
 <body>
@@ -271,12 +277,16 @@ footer{text-align:center;padding-top:18px;border-top:1px solid var(--line)}
   <div class="card">
     <h2>Datos del paciente</h2>
     <div class="maps" style="margin-bottom:16px"><div><label for="pn">Nombre (opcional)</label><input id="pn" type="text" autocomplete="off"></div><div><label for="ph">Historia clínica (opcional)</label><input id="ph" type="text" autocomplete="off"></div><div><label for="pa">Edad en años (opcional)</label><input id="pa" type="number" min="0" max="18"></div></div>
-    <div class="field"><label for="pcv">Hematocrito (%)</label><span class="tag">≥ 42 · +1</span><input id="pcv" type="number" inputmode="decimal" min="0" max="80" step="0.1"></div>
-    <div class="field"><label for="plt">Plaquetas (células/mm³)</label><span class="tag">≤ 75 000 · +1</span><input id="plt" type="number" inputmode="numeric" min="0" step="1000"></div>
-    <div class="field"><label for="wbc">Leucocitos más altos (células/mm³)</label><span class="tag">≥ 7 000 · +1</span><input id="wbc" type="number" inputmode="numeric" min="0" step="100"></div>
-    <div class="field"><label for="alt">ALT (U/L)</label><span class="tag">≥ 70 · +1</span><input id="alt" type="number" inputmode="decimal" min="0" step="1"></div>
+    <div class="field"><label for="pcv">Hematocrito (%) <span class="mb">modelo</span></label><span class="tag">≥ 42 · +1</span><input id="pcv" type="number" inputmode="decimal" min="0" max="80" step="0.1"></div>
+    <div class="field"><label for="plt">Plaquetas (células/mm³) <span class="mb">modelo</span></label><span class="tag">≤ 75 000 · +1</span><input id="plt" type="number" inputmode="numeric" min="0" step="1000"></div>
+    <div class="field"><label for="wbc">Leucocitos más altos (células/mm³) <span class="mb">modelo</span></label><span class="tag">≥ 7 000 · +1</span><input id="wbc" type="number" inputmode="numeric" min="0" step="100"></div>
+    <div class="field"><label for="alt">ALT (U/L) <span class="mb">modelo</span></label><span class="tag">≥ 70 · +1</span><input id="alt" type="number" inputmode="decimal" min="0" step="1"></div>
     <label class="check" for="hypo"><input id="hypo" type="checkbox">Hipotensión<span class="tag">+3</span></label>
-    <button id="reset" type="button">Borrar datos</button>
+    <label class="check mini" for="hauto" style="margin-top:8px"><input id="hauto" type="checkbox" checked>Calcular la hipotensión con edad y presión sistólica (criterio PALS)</label>
+    <p class="note" id="hnote" style="margin:6px 0 0"></p>
+    <details class="more" open><summary>Otras variables del estudio (no suman puntos)</summary><div id="extra"></div></details>
+    <details class="more" open><summary>Ficha clínica ampliada: signos vitales, signos de alarma y otros datos</summary><div id="extra2"></div></details>
+    <button type="button" data-pre="0">Ejemplo estable</button><button type="button" data-pre="1">Ejemplo límite</button><button type="button" data-pre="2">Ejemplo crítico</button><button id="reset" type="button">Limpiar ficha</button>
   </div>
   <div class="card" aria-live="polite">
     <h2>Resultado</h2>
@@ -286,9 +296,23 @@ footer{text-align:center;padding-top:18px;border-top:1px solid var(--line)}
     <div class="mark"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
     <div class="verdict" id="verdict"><strong id="vt"></strong><span id="vd"></span></div>
     <p class="note" id="obs" style="margin:12px 0 0"></p>
+    <div class="verdict" id="oms" style="margin-top:12px"></div>
+    <div class="facts" id="mprob" style="margin-top:12px"></div>
+    <div id="pexp" class="cbox" hidden><h3 style="margin:0 0 8px">Cómo se arma la probabilidad</h3><div id="pcon"></div>
+      <svg id="psig" viewBox="0 0 400 114" width="100%" role="img" aria-label="Curva sigmoide con la posición del paciente"></svg><p class="note" id="plog" style="margin:4px 0 0"></p></div>
+    <div class="cbox"><h3 style="margin:0 0 8px">Valores calculados</h3><dl class="dl" id="ocalc"></dl></div>
+    <p class="note" id="oder" style="margin:10px 0 0"></p>
     <ul class="parts" id="parts"></ul>
     <p class="warn" id="warn"></p>
+    <button id="addb" type="button">Añadir al lote</button><button id="prn" type="button">Imprimir ficha</button>
+    <p class="note" id="addm" style="margin:10px 0 0"></p><button id="seel" type="button" hidden>Ver lote</button>
   </div>
+</div>
+<div class="card" style="margin-top:16px">
+  <h2>Variables registradas: las 20 del estudio y la ficha ampliada</h2>
+  <p class="note" id="xsum"></p>
+  <div class="scroll"><table style="min-width:780px"><thead><tr><th>Variable</th><th>Valor</th><th>Criterio</th><th>Cumple</th><th>% complicados (cumple / no cumple)</th><th>p</th><th>Uso</th></tr></thead><tbody id="xbody"></tbody></table></div>
+  <p class="note" id="xnote" style="margin:12px 0 0"></p>
 </div>
 </section>
 
@@ -299,29 +323,41 @@ footer{text-align:center;padding-top:18px;border-top:1px solid var(--line)}
   <input id="file" type="file" accept=".csv,.tsv,.txt,.xlsx,.xls">
   <button id="demo" type="button">Usar datos del estudio (303 niños)</button>
   <button id="tpl" type="button">Descargar plantilla Excel</button>
+  <button id="lclr" type="button">Vaciar lista</button>
   <div id="mapbox" hidden>
     <h3>Asignación de columnas</h3>
     <div class="maps" id="maps"></div>
     <button id="run" class="pri" type="button">Calcular</button>
   </div>
   <p class="warn" id="lerr"></p>
+  <p class="note" id="lman" style="margin:8px 0 0"></p>
 </div>
 <div id="lres" hidden>
-  <div class="card"><h2>Resumen</h2><div class="facts" id="lsum"></div>
+  <div class="card"><h2>Resumen</h2><div class="facts" id="lsum"></div><div class="dist" id="ldist"></div>
     <div id="lmet" hidden>
-      <h3>Desempeño con umbral ≥ 2 (frente al resultado real)</h3>
+      <h3 id="lmeth">Desempeño frente al resultado real</h3>
       <div class="facts" id="lperf"></div>
       <div class="grid eq" style="margin-top:14px">
         <div class="scroll"><table><thead><tr><th>Puntaje</th><th>Pacientes</th><th>Complicados</th><th>% complicados</th></tr></thead><tbody id="lbys"></tbody></table></div>
-        <div class="scroll"><table style="min-width:240px"><thead><tr><th></th><th>Score ≥ 2</th><th>Score &lt; 2</th></tr></thead><tbody id="lconf"></tbody></table></div>
+        <div class="scroll"><table style="min-width:240px"><thead><tr><th></th><th>Alto riesgo</th><th>Riesgo bajo</th></tr></thead><tbody id="lconf"></tbody></table></div>
       </div>
     </div>
   </div>
-  <div class="card"><h2>Resultados por paciente</h2>
-    <p class="note" id="lnote"></p>
-    <div class="scroll"><table style="min-width:620px"><thead id="lhead"></thead><tbody id="lbody"></tbody></table></div>
-    <button id="dl" type="button">Descargar resultados (CSV)</button>
-    <button id="dlx" type="button">Exportar resultados (XLSX)</button>
+  <div class="card"><h2>Pacientes del lote</h2>
+    <div class="crit">
+      <label>Clasificar por <select id="cm"><option value="sc">Score (0 a 7)</option><option value="pl">Probabilidad logística</option><option value="pa">Probabilidad red neuronal</option></select></label>
+      <label>Alto riesgo si es ≥ <b id="cv">2</b><input type="range" id="cr" min="1" max="7" step="1" value="2" aria-label="Corte de alto riesgo"></label>
+      <button type="button" id="creset">Volver al corte del modelo (score ≥ 2)</button>
+    </div>
+    <div class="tools"><div class="tg" id="lf"></div>
+      <div><select id="lsort" aria-label="Ordenar" style="width:auto"><option value="o">Orden del archivo</option><option value="p">Mayor prob. logística primero</option><option value="a">Mayor prob. red primero</option><option value="s">Mayor score primero</option></select>
+      <button id="dl" type="button">Descargar CSV</button><button id="dlx" type="button">Exportar XLSX</button></div></div>
+    <div class="cg"><div><div class="chart" id="chart"></div>
+      <p class="leg2"><span><i style="background:var(--high)"></i>Alto riesgo</span><span><i style="background:var(--low)"></i>Riesgo bajo</span><span id="lgdot"><i style="border:2px solid var(--ink);border-radius:50%;background:var(--surface)"></i>El otro modelo, para comparar</span><span>La línea discontinua es el corte</span></p></div>
+      <aside class="ed" id="ed"></aside></div>
+    <p class="note" id="lnote" style="margin-top:12px"></p>
+    <div class="scroll"><table style="min-width:720px"><thead id="lth"></thead><tbody id="ltb"></tbody></table></div>
+    <p class="note" style="margin:10px 0 0">Los valores en ámbar cruzan su corte y suman un punto al score.</p>
   </div>
 </div>
 </section>
@@ -338,6 +374,10 @@ footer{text-align:center;padding-top:18px;border-top:1px solid var(--line)}
     <svg id="roc" viewBox="0 0 320 300" width="100%" role="img" aria-label="Curva ROC del score"></svg>
     <div class="scroll"><table><thead><tr><th>Umbral</th><th>Sensibilidad</th><th>Especificidad</th><th>Youden</th></tr></thead><tbody id="t4"></tbody></table></div>
   </div>
+</div>
+<div class="card"><h2>Comparación de modelos sobre la cohorte</h2>
+  <div class="facts" id="mauc"></div>
+  <p class="note" style="margin:10px 0 0">Calculado con los 302 pacientes con datos completos y las mismas 5 variables binarias. La regresión logística y la red neuronal 5-4-1 se ajustaron con esta misma cohorte, así que el AUC es optimista y no reemplaza una validación externa.</p>
 </div>
 <div class="grid eq">
   <div class="card"><h2>Odds ratios ajustados</h2>
@@ -374,6 +414,170 @@ function getObs(){if(OBS)return OBS;OBS=[];for(var i=0;i<8;i++)OBS.push([0,0]);
 function go(t){document.querySelectorAll(".tabs button").forEach(function(x){x.setAttribute("aria-selected",x.dataset.t===t)});["inicio","eda","est","calc","lote"].forEach(function(id){$(id).hidden=id!==t});window.scrollTo(0,0)}
 document.querySelectorAll("[data-t],[data-go]").forEach(function(b){b.addEventListener("click",function(){go(b.dataset.t||b.dataset.go)})});
 
+/* variables del estudio */
+var XV=[
+ {id:"pa",l:"Edad (años)",k:"n",c:"> 6",t:function(v){return v>6},a:21.8,b:16.7,p:"0,379"},
+ {id:"x_sex",l:"Sexo",k:"s",c:"Femenino",t:function(v){return v==="Femenino"},a:23.2,b:18.6,p:"0,324",mk:1,g:0,o:["Femenino","Masculino"]},
+ {id:"x_fev",l:"Días de fiebre",k:"n",c:"≥ 6",t:function(v){return v>=6},a:30.9,b:17.9,p:"0,020",mk:1,g:0},
+ {id:"x_hd",l:"Cefalea",k:"c",a:26.1,b:18.5,p:"0,134",mk:1,g:1},
+ {id:"x_my",l:"Mialgias",k:"c",a:22.0,b:20.3,p:"0,739",mk:1,g:1},
+ {id:"x_ab",l:"Dolor abdominal",k:"c",a:28.0,b:19.4,p:"0,169",mk:1,g:1},
+ {id:"x_ra",l:"Exantema",k:"c",a:25.0,b:20.6,p:"0,670",mk:1,g:1},
+ {id:"x_vo",l:"Vómitos",k:"c",a:27.6,b:15.9,p:"0,014",mk:1,g:1},
+ {id:"x_br",l:"Dificultad respiratoria",k:"c",a:50.0,b:20.6,p:"0,307",mk:1,g:1},
+ {id:"x_bl",l:"Sangrado",k:"c",a:83.3,b:19.5,p:"< 0,001",mk:1,g:1},
+ {id:"hypo",l:"Hipotensión",k:"c",a:76.3,b:12.8,p:"< 0,001",sc:1},
+ {id:"x_og",l:"Organomegalia",k:"c",a:77.8,b:19.0,p:"< 0,001",mk:1,g:1},
+ {id:"x_hb",l:"Hemoglobina (g/dl)",k:"n",c:"≥ 13",t:function(v){return v>=13},a:24.8,b:15.9,p:"0,05",mk:1,g:2},
+ {id:"pcv",l:"Hematocrito (%)",k:"n",c:"≥ 42",t:function(v){return v>=42},a:35.4,b:15.6,p:"< 0,001",sc:1},
+ {id:"x_wl",l:"Leucocitos más bajos (cél/mm³)",k:"n",c:"≤ 3 200",t:function(v){return v<=3200},a:17.6,b:23.4,p:"0,223",mk:1,g:2},
+ {id:"plt",l:"Plaquetas (cél/mm³)",k:"n",c:"≤ 75 000",t:function(v){return v<=75000},a:36.4,b:10.4,p:"< 0,001",sc:1},
+ {id:"alt",l:"ALT (U/L)",k:"n",c:"≥ 70",t:function(v){return v>=70},a:47.8,b:13.1,p:"< 0,001",sc:1},
+ {id:"wbc",l:"Leucocitos más altos (cél/mm³)",k:"n",c:"≥ 7 000",t:function(v){return v>=7000},a:36.0,b:15.8,p:"< 0,001",sc:1},
+ {id:"x_cr",l:"Creatinina (mg/dl)",k:"n",c:"≥ 0,5",t:function(v){return v>=0.5},a:21.3,b:20.4,p:"0,837",mk:1,g:2},
+ {id:"x_fe",l:"Ferritina (ng/ml)",k:"n",c:"≥ 1 000",t:function(v){return v>=1000},a:48.9,b:13.6,p:"< 0,001",mk:1,g:2}
+];
+(function(){
+  var T=["Datos generales","Síntomas y signos","Laboratorio adicional"],h="";
+  T.forEach(function(title,gi){
+    var ck="";h+='<h3 style="margin:16px 0 8px">'+title+'</h3><div class="maps">';
+    XV.forEach(function(it){if(!it.mk||it.g!==gi)return;
+      if(it.k==="c")ck+='<label class="check mini" for="'+it.id+'"><input id="'+it.id+'" type="checkbox">'+it.l+'</label>';
+      else if(it.k==="s")h+='<div><label for="'+it.id+'">'+it.l+'</label><select id="'+it.id+'"><option value="">(sin dato)</option>'+it.o.map(function(o){return '<option>'+o+'</option>'}).join("")+'</select></div>';
+      else h+='<div><label for="'+it.id+'">'+it.l+'</label><input id="'+it.id+'" type="number" step="any" inputmode="decimal" min="0"></div>';
+    });
+    h+='</div>'+(ck?'<div class="chips">'+ck+'</div>':'');
+  });
+  $("extra").innerHTML=h;
+  XV.forEach(function(it){if(it.mk)["input","change"].forEach(function(ev){$(it.id).addEventListener(ev,function(){calc()})})});
+  $("pa").addEventListener("input",function(){renderX()});
+  $("reset").addEventListener("click",function(){XV.forEach(function(it){if(!it.mk)return;if(it.k==="c")$(it.id).checked=false;else $(it.id).value=""});calc()});
+})();
+function gv(it){var e=$(it.id);if(it.k==="c")return e.checked;if(it.k==="s")return e.value||null;var v=parseFloat(e.value);return isNaN(v)?null:v}
+function renderX(){
+  var rows="",hits=0,by={},warns=[],reg=0;
+  XV.forEach(function(it){
+    var v=gv(it),met=null,txt="sin dato";
+    if(it.k==="c"){met=v;txt=v?"Presente":"Ausente"}
+    else if(v!==null){met=it.t(v);txt=it.k==="s"?v:f(String(v))}
+    if(met)hits++;if(it.k==="c"||v!==null)reg++;
+    by[it.id]=v;
+    var sig=it.p.charAt(0)==="<"||parseFloat(it.p.replace(",","."))<0.05;
+    var uso=it.sc?'<span class="pill p-info">Score</span>':sig?'<span class="pill p-mid">Asociada</span>':'<span class="pill p-gray">Informativa</span>';
+    rows+='<tr'+(met?' class="hit"':'')+'><td>'+it.l+'</td><td>'+txt+'</td><td>'+(it.c||"Presente")+'</td><td>'+(met===null?"–":met?"Sí":"No")+'</td><td>'+f(it.a.toFixed(1))+' % / '+f(it.b.toFixed(1))+' %</td><td>'+it.p.replace("<","&lt;")+'</td><td>'+uso+'</td></tr>';
+  });
+  rows+='<tr><td colspan="7" style="text-align:left;font-weight:600;background:var(--bg)">Ficha ampliada (no forma parte del score ni del análisis del artículo)</td></tr>';
+  XW.forEach(function(it){var v=gv(it),txt="sin dato",bad=false;
+    if(it.k==="c"){txt=v?"Presente":"Ausente";reg++}
+    else if(v!==null){reg++;txt=it.k==="s"?v:f(String(v));
+      if(it.r&&(v<it.r[0]||v>it.r[1])){bad=true;warns.push(it.l.replace(/ \(.*\)/,"")+": "+f(String(v))+" está fuera del rango admitido ("+it.r[0]+" a "+it.r[1]+").")}}
+    $(it.id).setAttribute("aria-invalid",bad);by[it.id]=v;
+    rows+='<tr'+(it.k==="c"&&v?' class="hit"':'')+'><td>'+it.l+'</td><td>'+txt+'</td><td colspan="4" style="text-align:left;color:var(--muted)">Dato de la ficha</td><td><span class="pill p-gray">Informativa</span></td></tr>'});
+  if(by.x_pas!==null&&by.x_pad!==null&&by.x_pad>=by.x_pas)warns.push("La presión diastólica debe ser menor que la sistólica.");
+  $("xbody").innerHTML=rows;
+  $("xsum").textContent="Cumple el criterio en "+hits+" de las 20 variables del estudio. Ficha con "+reg+" de "+(XV.length+XW.length)+" variables registradas (los síntomas sin marcar cuentan como ausentes).";
+  var n=warns.slice();
+  if(by.x_bl||by.x_og)n.push("El sangrado y la organomegalia se asociaron con complicaciones en el análisis bivariado, pero no resultaron predictores independientes en el modelo multivariable (sus intervalos de confianza incluyen 1).");
+  if(by.x_fe!==null)n.push("La ferritina no entró al modelo multivariable porque solo 191 pacientes tenían el dato.");
+  n.push("Los porcentajes vienen del análisis bivariado del artículo (Tabla 1) y no son probabilidades individuales. Solo las variables marcadas como Score suman puntos.");
+  $("xnote").textContent=n.join(" ");
+}
+/* modelos reajustados con la cohorte */
+var MODEL={"lr":[-3.6373,2.99,1.3597,1.3993,1.1063,0.9961],"nn":{"W1":[[-1.2157,-0.5175,-1.0842,-0.5753,-0.9515],[0,0,0,0,0],[-1.1321,-0.2911,0.4041,0.8199,-0.1485],[-0.3638,-0.3395,0.3559,-1.0477,1.2058]],"b1":[3.1262,-0.267,-0.0893,0.0022],"W2":[-2.0301,0,-1.4878,-1.6994],"b2":3.1548}};
+function sg(z){return 1/(1+Math.exp(-z))}
+function probs(h,wb,al,pl,pc){
+  var x=[h,wb,al,pl,pc],N=MODEL.nn,z=MODEL.lr[0]+x.reduce(function(a,v,i){return a+v*MODEL.lr[i+1]},0);
+  var hh=N.W1.map(function(w,j){return Math.max(0,N.b1[j]+w.reduce(function(a,v,k){return a+v*x[k]},0))});
+  return {z:z,pl:sg(z),pa:sg(N.b2+hh.reduce(function(a,v,j){return a+v*N.W2[j]},0))};
+}
+function auc(s,y){var a=0,np=0,nn=0;y.forEach(function(v){v?np++:nn++});
+  s.forEach(function(si,i){if(!y[i])return;s.forEach(function(sj,j){if(y[j])return;a+=si>sj?1:si===sj?.5:0})});return a/(np*nn)}
+/* ficha ampliada */
+var XW=[
+ {id:"x_temp",l:"Temperatura (°C)",k:"n",r:[34,43],st:.1,g:0},
+ {id:"x_fc",l:"Frecuencia cardíaca (lpm)",k:"n",r:[30,250],st:1,g:0},
+ {id:"x_fr",l:"Frecuencia respiratoria (rpm)",k:"n",r:[8,100],st:1,g:0},
+ {id:"x_pas",l:"Presión sistólica (mmHg)",k:"n",r:[30,200],st:1,g:0},
+ {id:"x_pad",l:"Presión diastólica (mmHg)",k:"n",r:[15,150],st:1,g:0},
+ {id:"x_llc",l:"Llenado capilar (s)",k:"n",r:[0,10],st:.5,g:0},
+ {id:"x_le",l:"Letargia o irritabilidad",k:"c",g:1},
+ {id:"x_li",l:"Acumulación de líquidos",k:"c",g:1},
+ {id:"x_hp",l:"Aumento del hematocrito con caída rápida de plaquetas",k:"c",g:1},
+ {id:"x_pe",l:"Petequias",k:"c",g:1},
+ {id:"x_to",l:"Prueba del torniquete positiva",k:"c",g:1},
+ {id:"x_rr",l:"Dolor retroocular",k:"c",g:1},
+ {id:"x_peso",l:"Peso (kg)",k:"n",r:[1,150],st:.1,g:2},
+ {id:"x_ast",l:"AST (U/L)",k:"n",r:[0,20000],st:1,g:2},
+ {id:"x_alb",l:"Albúmina (g/dl)",k:"n",r:[.5,7],st:.1,g:2},
+ {id:"x_ns1",l:"NS1",k:"s",o:["Positivo","Negativo"],g:2},
+ {id:"x_igm",l:"IgM dengue",k:"s",o:["Positivo","Negativo"],g:2}
+];
+(function(){
+  var T=["Signos vitales","Signos de alarma y otros síntomas","Otros datos"],h="";
+  T.forEach(function(title,gi){
+    var ck="";h+='<h3 style="margin:16px 0 8px">'+title+'</h3><div class="maps">';
+    XW.forEach(function(it){if(it.g!==gi)return;
+      if(it.k==="c")ck+='<label class="check mini" for="'+it.id+'"><input id="'+it.id+'" type="checkbox">'+it.l+'</label>';
+      else if(it.k==="s")h+='<div><label for="'+it.id+'">'+it.l+'</label><select id="'+it.id+'"><option value="">(sin dato)</option>'+it.o.map(function(o){return '<option>'+o+'</option>'}).join("")+'</select></div>';
+      else h+='<div><label for="'+it.id+'">'+it.l+'</label><input id="'+it.id+'" type="number" step="'+it.st+'" min="'+it.r[0]+'" max="'+it.r[1]+'" inputmode="decimal"></div>';
+    });
+    h+='</div>'+(ck?'<div class="chips">'+ck+'</div>':'');
+  });
+  $("extra2").innerHTML=h;
+  XW.forEach(function(it){["input","change"].forEach(function(ev){$(it.id).addEventListener(ev,function(){calc()})})});
+  $("hauto").addEventListener("change",function(){calc()});
+  $("reset").addEventListener("click",function(){XW.forEach(function(it){if(it.k==="c")$(it.id).checked=false;else $(it.id).value=""});calc()});
+  $("prn").addEventListener("click",function(){window.print()});
+})();
+function nv(id){var v=parseFloat($(id).value);return isNaN(v)?null:v}
+function syncHypo(){
+  var a=$("hauto").checked,e=nv("pa"),p=nv("x_pas"),n=$("hnote");
+  if(a&&e!==null&&p!==null){var lim=e<1?70:e<10?70+2*Math.floor(e):90,h=p<lim;
+    $("hypo").checked=h;$("hypo").disabled=true;
+    n.textContent="Calculada: "+(h?"sí":"no")+" (sistólica "+p+" frente al límite de "+lim+" mmHg para "+e+" "+(e===1?"año":"años")+").";}
+  else{$("hypo").disabled=false;n.textContent=a?"Se calcula sola al ingresar edad y presión sistólica. Mientras tanto puedes marcarla a mano.":"Marcada manualmente."}
+}
+var AL=[["x_ab","dolor abdominal"],["x_vo","vómitos"],["x_bl","sangrado"],["x_le","letargia o irritabilidad"],["x_og","organomegalia"],["x_li","acumulación de líquidos"],["x_hp","aumento del hematocrito con caída rápida de plaquetas"]];
+function renderO(miss){
+  var g=[],al=[],h=$("hypo").checked,pas=nv("x_pas"),pad=nv("x_pad"),llc=nv("x_llc"),alt=nv("alt"),ast=nv("x_ast"),tp=nv("x_temp");
+  var pp=(pas!==null&&pad!==null&&pad<pas)?pas-pad:null;
+  if(h)g.push("hipotensión para la edad");
+  if(pp!==null&&pp<=20)g.push("presión de pulso estrecha ("+pp+" mmHg)");
+  if(llc!==null&&llc>2)g.push("llenado capilar lento ("+f(String(llc))+" s)");
+  if((alt!==null&&alt>=1000)||(ast!==null&&ast>=1000))g.push("transaminasas ≥ 1 000 U/L");
+  AL.forEach(function(a){if($(a[0]).checked)al.push(a[1])});
+  var c,t,l;
+  if(g.length){c="var(--high)";t="Dengue grave";l="Signos de gravedad: "+g.join("; ")+"."}
+  else if(al.length){c="var(--mid)";t="Dengue con signos de alarma";l="Signos de alarma: "+al.join("; ")+"."}
+  else{c="var(--low)";t="Dengue sin signos de alarma";l="No se marcó ningún signo de alarma."}
+  var o=$("oms");o.style.setProperty("--rc",c);
+  o.innerHTML='<strong>Clasificación OMS orientativa: '+t+'</strong><span>'+l+' Confirma con la valoración clínica.</span>';
+  var pr=null;
+  if(!miss)pr=probs(+h,+(nv("wbc")>=7000),+(alt>=70),+(nv("plt")<=75000),+(nv("pcv")>=42));
+  $("mprob").innerHTML=pr?'<div><b>'+pct(pr.pl)+'</b><span>Regresión logística</span></div><div><b>'+pct(pr.pa)+'</b><span>Red neuronal 5-4-1</span></div>':'<div style="grid-column:1/-1"><span>Completa los 4 valores de laboratorio para ver las probabilidades de los modelos.</span></div>';
+  var cs=nv("pa"),hs=($("hauto").checked&&cs!==null&&pas!==null)?(h?"Sí":"No")+" (calculada: sistólica "+pas+" frente a "+(cs<1?70:cs<10?70+2*Math.floor(cs):90)+" mmHg)":(h?"Sí":"No")+" (manual)";
+  var rows=[["Hipotensión",hs]];
+  if(pp!==null)rows.push(["Presión de pulso",pp+" mmHg"+(pp<=20?", estrecha (≤ 20)":"")]);
+  if(tp!==null)rows.push(["Temperatura",f(String(tp))+" °C"+(tp>=38?", febril":"")]);
+  if(llc!==null)rows.push(["Llenado capilar",f(String(llc))+" s"+(llc>2?", lento (> 2 s)":"")]);
+  if(ast!==null&&alt!==null&&alt>0)rows.push(["Relación AST/ALT",f((ast/alt).toFixed(2))]);
+  var SS=["x_hd","x_my","x_ra","x_pe","x_to","x_rr"];
+  rows.push(["Signos de alarma",AL.filter(function(a){return $(a[0]).checked}).length+" de "+AL.length]);
+  rows.push(["Otros síntomas",SS.filter(function(k){return $(k).checked}).length+" de "+SS.length]);
+  if($("x_ns1").value||$("x_igm").value)rows.push(["Pruebas",[$("x_ns1").value&&"NS1 "+$("x_ns1").value.toLowerCase(),$("x_igm").value&&"IgM "+$("x_igm").value.toLowerCase()].filter(Boolean).join(", ")]);
+  $("ocalc").innerHTML=rows.map(function(r){return "<dt>"+r[0]+"</dt><dd>"+r[1]+"</dd>"}).join("");
+  var pe=$("pexp");
+  if(pr){pe.hidden=false;
+    var TM=[["Intercepto",0,null],["Hipotensión",1,h],["Leucocitos",2,nv("wbc")>=7000],["ALT",3,alt>=70],["Plaquetas",4,nv("plt")<=75000],["Hematocrito",5,nv("pcv")>=42]],mx=Math.max.apply(null,MODEL.lr.map(Math.abs));
+    $("pcon").innerHTML=TM.map(function(m){var cf=MODEL.lr[m[1]],on=m[2]===null||m[2];
+      return '<div class="cn'+(on?'':' off')+'"><span>'+m[0]+'</span><div class="tk"><i style="width:'+(on?Math.abs(cf)/mx*100:0)+'%;background:'+(cf<0?'var(--high)':'var(--accent2)')+'"></i></div><b>'+(on?(cf<0?"−":"+")+f(Math.abs(cf).toFixed(2)):"0")+'</b></div>'}).join("");
+    var g="",X=function(q){return 20+(q+5)/10*360},Y=function(p){return 96-p*86};
+    for(var q=-5;q<=5.001;q+=.25)g+=(g?"L":"M")+X(q).toFixed(1)+" "+Y(sg(q)).toFixed(1);
+    $("psig").innerHTML='<line x1="20" x2="380" y1="96" y2="96" stroke="var(--line)"/><line x1="'+X(0)+'" x2="'+X(0)+'" y1="6" y2="96" stroke="var(--line)" stroke-dasharray="3 3"/><path d="'+g+'" fill="none" stroke="var(--accent2)" stroke-width="2"/><circle cx="'+X(Math.max(-5,Math.min(5,pr.z)))+'" cy="'+Y(pr.pl)+'" r="5" fill="var(--high)"/><text x="20" y="110">logit −5</text><text x="'+X(0)+'" y="110" text-anchor="middle">0</text><text x="380" y="110" text-anchor="end">+5</text>';
+    $("plog").innerHTML="Suma (logit) = <b>"+(pr.z<0?"−":"")+f(Math.abs(pr.z).toFixed(2))+"</b>; la sigmoide la convierte en <b>"+pct(pr.pl)+"</b>.";
+  }else pe.hidden=true;
+  $("oder").textContent=pr?"Las probabilidades vienen de modelos reajustados con la cohorte (validación interna).":"";
+}
 /* calculadora */
 var bar=$("bar");for(var i=0;i<7;i++)bar.appendChild(document.createElement("i"));
 var ids=["pcv","plt","wbc","alt"];
@@ -384,6 +588,7 @@ var rules=[
  {id:"alt",name:"ALT ≥ 70 U/L",test:function(v){return v>=70}}
 ];
 function calc(){
+  syncHypo();
   var total=0,missing=[],rows="";
   rules.forEach(function(r){
     var raw=$(r.id).value;
@@ -404,6 +609,7 @@ function calc(){
   var o=getObs()[total];$("obs").textContent=missing.length?"":(o[0]?"En la cohorte del estudio, "+o[1]+" de "+o[0]+" niños con "+total+" punto"+(total===1?"":"s")+" tuvieron dengue complicado ("+pct(o[1]/o[0])+").":"Ningún niño de la cohorte tuvo este puntaje.");
   $("who").textContent=[$("pn").value.trim(),$("ph").value.trim(),$("pa").value?$("pa").value+" años":""].filter(Boolean).join(" · ");
   $("warn").textContent=missing.length?"Datos pendientes: "+missing.join(", ")+".":"";
+  renderX();renderO(missing.length);
 }
 ids.concat(["pn","ph","pa"]).forEach(function(id){$(id).addEventListener("input",calc)});
 $("hypo").addEventListener("change",calc);
@@ -441,19 +647,21 @@ function parseCSV(t){
   if(cur!==""||row.length){row.push(cur);out.push(row)}
   return out;
 }
-var FIELDS=[["pcv","Hematocrito (%)"],["plt","Plaquetas"],["wbc","Leucocitos más altos"],["alt","ALT"],["hypo","Hipotensión"],["out","Resultado real (opcional)"]];
-var H=[],R=[],RES=[];
+var FIELDS=[["id","Identificador (opcional)"],["pcv","Hematocrito (%)"],["plt","Plaquetas"],["wbc","Leucocitos más altos"],["alt","ALT"],["hypo","Hipotensión"],["out","Resultado real (opcional)"]];
+var H=[],R=[],RES=[],LAST=false,MAN=false;
 function detect(k){
   var re=function(r){return function(x){return r.test(x)}};
+  if(k==="id")return H.findIndex(re(/paciente|nombre|^id$|historia|^hc$/i));
   if(k==="pcv")return H.findIndex(re(/pcv|hemat/i));
-  if(k==="plt")return H.findIndex(re(/plat/i));
+  if(k==="plt")return H.findIndex(re(/plat|plaq/i));
   if(k==="wbc"){var i=H.findIndex(function(x){return /wbc|leuc/i.test(x)&&/high|alto|max/i.test(x)});
     return i>=0?i:H.findIndex(function(x){return /wbc|leuc/i.test(x)&&!/low|bajo|min/i.test(x)})}
   if(k==="alt")return H.findIndex(re(/\balt\b|^alt|tgp|gpt/i));
   if(k==="hypo")return H.findIndex(re(/hipot|\bbp\b|blood|presi/i));
   return H.findIndex(re(/group|grupo|complic|resultado|outcome/i));
 }
-function load(arr){
+function load(arr,man){
+  MAN=!!man;
   $("lerr").textContent="";$("lres").hidden=true;
   if(arr.length<2){$("lerr").textContent="El archivo no tiene filas de datos.";return}
   H=arr[0].map(function(x){return String(x).trim()});
@@ -466,7 +674,8 @@ function load(arr){
     if(p[0]==="hypo")h+='<div><label for="m_hm">Codificación de hipotensión</label><select id="m_hm"><option value="1">1, sí, true = hipotensión</option><option value="2">2 = hipotensión (Excel del estudio)</option></select></div>';
     if(p[0]==="out")h+='<div><label for="m_om">Codificación del resultado</label><select id="m_om"><option value="1">1, sí, true = complicado</option><option value="2">2 = complicado (Excel del estudio)</option></select></div>';
   });
-  $("maps").innerHTML=h;$("mapbox").hidden=false;
+  $("maps").innerHTML=h;$("mapbox").hidden=MAN;
+  $("lman").textContent=MAN?"Lista armada desde la calculadora: "+R.length+(R.length===1?" paciente.":" pacientes.")+" Puedes seguir añadiendo desde la calculadora.":"";
 }
 $("file").addEventListener("change",function(e){
   var fl=e.target.files[0];if(!fl)return;
@@ -480,45 +689,121 @@ $("file").addEventListener("change",function(e){
 $("demo").addEventListener("click",function(){load(parseCSV(DATA));$("run").click()});
 $("run").addEventListener("click",function(){
   var g=function(k){return parseInt($("m_"+k).value,10)};
-  var c={pcv:g("pcv"),plt:g("plt"),wbc:g("wbc"),alt:g("alt"),hypo:g("hypo"),out:g("out")};
+  var c={id:g("id"),pcv:g("pcv"),plt:g("plt"),wbc:g("wbc"),alt:g("alt"),hypo:g("hypo"),out:g("out")};
   if(c.pcv<0&&c.plt<0&&c.wbc<0&&c.alt<0&&c.hypo<0){$("lerr").textContent="Asigna al menos una columna de predictores.";return}
   $("lerr").textContent="";
-  var hm=$("m_hm").value,om=$("m_om").value;
+  var hm=$("m_hm").value,om=$("m_om").value;CMAP=c;HMODE=hm;
   RES=R.map(function(r,i){
     var v=function(k){return c[k]>=0?r[c[k]]:null};
     var p=[num(v("pcv")),num(v("plt")),num(v("wbc")),num(v("alt"))],hy=c.hypo>=0?yes(v("hypo"),hm):null;
     var sc=scoreOf(p[0],p[1],p[2],p[3],hy);
-    return {i:i+1,p:p,hy:hy,s:sc.s,miss:sc.miss,o:c.out>=0?yes(v("out"),om):null};
+    var pr=sc.miss?null:probs(+hy,+(p[2]>=7000),+(p[3]>=70),+(p[1]<=75000),+(p[0]>=42));
+    return {i:i+1,nm:c.id>=0?String(r[c.id]==null?"":r[c.id]).trim():"",p:p,hy:hy,s:sc.s,miss:sc.miss,pr:pr,o:c.out>=0?yes(v("out"),om):null};
   });
-  render(c.out>=0);
+  LAST=c.out>=0;SEL=null;buildEd();render(LAST);
 });
-function render(hasOut){
-  var n=RES.length,cnt=[0,0,0],inc=0;
-  RES.forEach(function(x){cnt[x.s<=1?0:x.s===2?1:2]++;if(x.miss)inc++});
-  $("lsum").innerHTML='<div><b>'+n+'</b><span>Pacientes</span></div><div><b>'+cnt[0]+'</b><span>Riesgo bajo (0 a 1)</span></div><div><b>'+cnt[1]+'</b><span>Aumentado (2)</span></div><div><b>'+cnt[2]+'</b><span>Alto (3 a 7)</span></div><div><b>'+inc+'</b><span>Con datos incompletos</span></div>';
+
+var CRIT={m:"sc",cut:2},FLT="all",SEL=null,CMAP={},HMODE="1";
+var V4=[{i:1,k:"plt",n:"Plaquetas",min:0,max:300000,st:1000,cut:75000,lo:1,f:"Corte ≤ 75 000"},{i:0,k:"pcv",n:"Hematocrito (%)",min:20,max:60,st:.1,cut:42,lo:0,f:"Corte ≥ 42"},{i:3,k:"alt",n:"ALT (U/L)",min:0,max:500,st:1,cut:70,lo:0,f:"Corte ≥ 70"},{i:2,k:"wbc",n:"Leucocitos",min:0,max:20000,st:100,cut:7000,lo:0,f:"Corte ≥ 7 000"}];
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function nm(x){return x.nm||("Paciente "+x.i)}
+function val(x){return CRIT.m==="sc"?x.s/7:(x.pr?x.pr[CRIT.m]:NaN)}
+function okx(x){return !isNaN(val(x))}
+function hi(x){return CRIT.m==="sc"?x.s>=CRIT.cut:val(x)*100>=CRIT.cut}
+function critTxt(){return CRIT.m==="sc"?"score ≥ "+CRIT.cut:(CRIT.m==="pl"?"prob. logística":"prob. red neuronal")+" ≥ "+CRIT.cut+" %"}
+function txtVal(x){return CRIT.m==="sc"?x.s+" / 7":pct(val(x))}
+function manTxt(){return "Lista armada desde la calculadora: "+R.length+(R.length===1?" paciente.":" pacientes.")+" Puedes seguir añadiendo desde la calculadora."}
+function recomp(x){var sc=scoreOf(x.p[0],x.p[1],x.p[2],x.p[3],x.hy);x.s=sc.s;x.miss=sc.miss;x.pr=sc.miss?null:probs(+x.hy,+(x.p[2]>=7000),+(x.p[3]>=70),+(x.p[1]<=75000),+(x.p[0]>=42))}
+function writeBack(x){var row=R[x.i-1],c=CMAP;if(!row)return;
+  ["pcv","plt","wbc","alt"].forEach(function(k,j){if(c[k]>=0)row[c[k]]=x.p[j]===null?"":x.p[j]});
+  if(c.hypo>=0)row[c.hypo]=x.hy===null?"":(HMODE==="2"?(x.hy?2:1):(x.hy?1:0))}
+function vis(){
+  var l=RES.filter(function(x){return FLT==="all"||(FLT==="err"?!okx(x):okx(x)&&(FLT==="hi"?hi(x):!hi(x)))});
+  var o=$("lsort").value,k={p:"pl",a:"pa"}[o];
+  if(o!=="o")l=l.slice().sort(function(a,b){var ea=okx(a)?0:1,eb=okx(b)?0:1;if(ea!==eb)return ea-eb;
+    if(o==="s")return (b.s-a.s)||((b.pr?b.pr.pl:0)-(a.pr?a.pr.pl:0));return (b.pr?b.pr[k]:-1)-(a.pr?a.pr[k]:-1)});
+  return l}
+function render(hasOut,ns){
+  var okl=RES.filter(okx),H1=okl.filter(hi).length,L1=okl.length-H1,er=RES.length-okl.length;
+  var pls=RES.filter(function(x){return x.pr}),media=pls.length?pls.reduce(function(a,x){return a+x.pr.pl},0)/pls.length:0;
+  $("lsum").innerHTML='<div><b>'+okl.length+'</b><span>Pacientes evaluados</span></div><div><b style="color:var(--high)">'+H1+'</b><span>Alto riesgo'+(okl.length?' ('+pct(H1/okl.length)+')':'')+'</span></div><div><b style="color:var(--low)">'+L1+'</b><span>Riesgo bajo</span></div><div><b>'+(pls.length?pct(media):"–")+'</b><span>Probabilidad logística media</span></div>'+(er?'<div><b>'+er+'</b><span>Sin dato para este criterio</span></div>':'');
+  $("ldist").innerHTML=okl.length?'<i style="flex:'+H1+'"></i><i style="flex:'+L1+'"></i>':'';
   var ev=RES.filter(function(x){return x.o!==null});
   $("lmet").hidden=!(hasOut&&ev.length);
   if(hasOut&&ev.length){
     var pos=[0,0,0,0,0,0,0,0],neg=[0,0,0,0,0,0,0,0],tp=0,fn=0,fp=0,tn=0;
-    ev.forEach(function(x){(x.o?pos:neg)[x.s]++;if(x.o){x.s>=2?tp++:fn++}else{x.s>=2?fp++:tn++}});
-    var P=tp+fn,N=fp+tn,auc="",a=0,cum=0;
-    if(P&&N){for(var k=0;k<8;k++){a+=pos[k]*(cum+0.5*neg[k]);cum+=neg[k]}auc=f((a/(P*N)).toFixed(2))}
+    ev.forEach(function(x){(x.o?pos:neg)[x.s]++;if(!okx(x))return;var a=hi(x);if(x.o){a?tp++:fn++}else{a?fp++:tn++}});
+    var P=tp+fn,N=fp+tn,au="",a=0,cum=0;
+    var P0=pos.reduce(function(s,v){return s+v},0),N0=neg.reduce(function(s,v){return s+v},0);
+    if(P0&&N0){for(var k=0;k<8;k++){a+=pos[k]*(cum+0.5*neg[k]);cum+=neg[k]}au=f((a/(P0*N0)).toFixed(2))}
     var d=function(a,b){return b?pct(a/b):"n/d"};
-    $("lperf").innerHTML='<div><b>'+d(tp,P)+'</b><span>Sensibilidad</span></div><div><b>'+d(tn,N)+'</b><span>Especificidad</span></div><div><b>'+d(tp,tp+fp)+'</b><span>VPP</span></div><div><b>'+d(tn,tn+fn)+'</b><span>VPN</span></div><div><b>'+(auc||"n/d")+'</b><span>AUC</span></div>';
+    $("lmeth").textContent="Desempeño con el criterio actual ("+critTxt()+") frente al resultado real";
+    $("lperf").innerHTML='<div><b>'+d(tp,P)+'</b><span>Sensibilidad</span></div><div><b>'+d(tn,N)+'</b><span>Especificidad</span></div><div><b>'+d(tp,tp+fp)+'</b><span>VPP</span></div><div><b>'+d(tn,tn+fn)+'</b><span>VPN</span></div><div><b>'+(au||"n/d")+'</b><span>AUC del score</span></div>';
     var rows="";for(var s=0;s<8;s++){var t=pos[s]+neg[s];rows+='<tr><td>'+s+'</td><td>'+t+'</td><td>'+pos[s]+'</td><td>'+(t?pct(pos[s]/t):"–")+'</td></tr>'}
     $("lbys").innerHTML=rows;
     $("lconf").innerHTML='<tr><td>Complicado</td><td>'+tp+'</td><td>'+fn+'</td></tr><tr><td>Sin complicaciones</td><td>'+fp+'</td><td>'+tn+'</td></tr>';
   }
-  $("lhead").innerHTML='<tr><th>#</th><th>Hematocrito</th><th>Plaquetas</th><th>Leucocitos</th><th>ALT</th><th>Hipotensión</th><th>Puntaje</th><th>Riesgo</th>'+(hasOut?'<th>Real</th>':'')+'</tr>';
-  var show=RES.slice(0,100),cell=function(v){return v===null?"–":f(v)};
-  $("lbody").innerHTML=show.map(function(x){var r=risk(x.s);
-    return '<tr><td>'+x.i+'</td><td>'+cell(x.p[0])+'</td><td>'+cell(x.p[1])+'</td><td>'+cell(x.p[2])+'</td><td>'+cell(x.p[3])+'</td><td>'+(x.hy===null?"–":x.hy?"Sí":"No")+'</td><td><b>'+x.s+'</b></td><td><span class="pill '+r[1]+'">'+r[0]+'</span></td>'+(hasOut?'<td>'+(x.o===null?"–":x.o?"Complicado":"Sin compl.")+'</td>':'')+'</tr>'}).join("");
-  $("lnote").textContent=(n>100?"Se muestran los primeros 100 de "+n+" pacientes. ":"")+(inc?"Los valores ausentes no suman puntos, por lo que el puntaje de esas filas puede estar subestimado.":"");
-  $("lres").hidden=false;$("lres").scrollIntoView({behavior:"smooth",block:"start"});
+  var ops=[["all","Todos",RES.length],["hi","Alto riesgo",H1],["lo","Riesgo bajo",L1]];if(er)ops.push(["err","Sin dato",er]);
+  if(FLT==="err"&&!er)FLT="all";
+  $("lf").innerHTML=ops.map(function(o){return '<button type="button" data-f="'+o[0]+'" class="'+(FLT===o[0]?'on':'')+'">'+o[1]+' ('+o[2]+')</button>'}).join("");
+  $("lf").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){FLT=b.dataset.f;render(LAST,true)})});
+  var v=vis();drawChart(v);drawTable(v,hasOut);
+  $("lnote").textContent=(v.length>40?"Gráfico: primeros 40 de "+v.length+". ":"")+(v.length>100?"Tabla: primeros 100. ":"")+(RES.some(function(x){return x.miss})?"Los valores ausentes no suman puntos, por lo que ese puntaje puede estar subestimado.":"");
+  $("lres").hidden=false;if(!ns)$("lres").scrollIntoView({behavior:"smooth",block:"start"});
 }
+function drawChart(v){
+  var cap=v.slice(0,40),sc=CRIT.m==="sc",c=sc?CRIT.cut/7:CRIT.cut/100;
+  var ticks=sc?[0,1,2,3,4,5,6,7].map(function(t){return [t/7,t]}):[0,25,50,75,100].map(function(t){return [t/100,t+" %"]});
+  var h='<div class="cax"><span></span><div class="cat">'+ticks.map(function(t){return '<span style="left:'+t[0]*100+'%">'+t[1]+'</span>'}).join("")+'</div><span></span></div>';
+  h+=cap.map(function(x){var b=okx(x),cl=!b?"e":hi(x)?"hi":"lo",oth=CRIT.m==="pl"?(x.pr?x.pr.pa:null):CRIT.m==="pa"?(x.pr?x.pr.pl:null):null;
+    var tt=b?nm(x)+": score "+x.s+(x.pr?", logística "+pct(x.pr.pl)+", red "+pct(x.pr.pa):"")+". Toca para modificar.":nm(x)+": sin datos suficientes para este criterio.";
+    return '<button type="button" class="cr '+cl+(x===SEL?' sel':'')+'" data-i="'+RES.indexOf(x)+'" title="'+esc(tt)+'" aria-label="'+esc(tt)+'"><span class="cl">'+esc(nm(x))+'</span><span class="ct"><i class="cb" style="width:'+(b?val(x)*100:0)+'%"></i>'+(b&&oth!==null?'<i class="cd" style="left:'+oth*100+'%"></i>':'')+'</span><span class="cv">'+(b?txtVal(x):"sin dato")+'</span></button>'}).join("");
+  if(!cap.length)h+='<p class="note" style="margin:10px 0 0">No hay pacientes en esta categoría.</p>';
+  $("chart").style.setProperty("--c",c);$("chart").innerHTML=h;
+  $("chart").querySelectorAll(".cr").forEach(function(b){b.addEventListener("click",function(){select(RES[+b.dataset.i])})});
+  $("lgdot").style.display=sc?"none":"";
+}
+function drawTable(v,hasOut){
+  $("lth").innerHTML='<tr><th>Paciente</th><th>Hipot.</th><th>Plaquetas</th><th>Hto %</th><th>ALT</th><th>Leucocitos</th><th>Score</th><th>Logística</th><th>Red</th><th>Riesgo</th>'+(hasOut?'<th>Se complicó</th>':'')+'</tr>';
+  var cell=function(x,vv){var n=x.p[vv.i];return n===null?'<td>–</td>':'<td class="'+((vv.lo?n<=vv.cut:n>=vv.cut)?'x':'')+'">'+f(String(n))+'</td>'};
+  $("ltb").innerHTML=v.slice(0,100).map(function(x){var b=okx(x),r=!b?["Sin dato","p-gray"]:hi(x)?["Alto","p-high"]:["Bajo","p-low"];
+    return '<tr data-i="'+RES.indexOf(x)+'" class="'+(x===SEL?'selrow':'')+'"><td>'+esc(nm(x))+'</td><td class="'+(x.hy?'x':'')+'">'+(x.hy===null?"–":x.hy?"Sí":"No")+'</td>'+V4.map(function(vv){return cell(x,vv)}).join("")+'<td><b>'+x.s+'</b></td><td>'+(x.pr?pct(x.pr.pl):"–")+'</td><td>'+(x.pr?pct(x.pr.pa):"–")+'</td><td><span class="pill '+r[1]+'">'+r[0]+'</span></td>'+(hasOut?'<td>'+(x.o===null?"–":x.o?"Sí":"No")+'</td>':'')+'</tr>'}).join("")||'<tr><td colspan="11" style="text-align:center;color:var(--muted)">No hay pacientes en esta categoría.</td></tr>';
+  $("ltb").querySelectorAll("tr[data-i]").forEach(function(tr){tr.addEventListener("click",function(){select(RES[+tr.dataset.i]);$("ed").scrollIntoView({behavior:"smooth",block:"nearest"})})});
+}
+function select(x){SEL=SEL===x?null:x;buildEd();render(LAST,true)}
+function buildEd(){
+  var box=$("ed"),x=SEL;
+  if(!x){box.innerHTML='<p class="empty">Toca una barra o una fila de la tabla para ver y modificar los datos de ese paciente. Su barra se mueve mientras cambias los valores.</p>';return}
+  box.innerHTML='<div class="eh"><h4>'+esc(nm(x))+'</h4><span class="pill" id="etag"></span></div><p class="note" id="ek" style="margin:0 0 6px"></p><button type="button" class="etg" id="ehyp"><span>Hipotensión arterial</span><b></b></button>'+
+    V4.map(function(vv){return '<div class="ef" id="ef-'+vv.k+'"><div class="t"><label for="en-'+vv.k+'">'+vv.n+'<span></span></label><input type="number" id="en-'+vv.k+'" step="'+vv.st+'"></div><input type="range" id="er-'+vv.k+'" min="'+vv.min+'" max="'+vv.max+'" step="'+vv.st+'" aria-label="'+vv.n+'"></div>'}).join("")+
+    '<div style="margin-top:6px"><button type="button" id="edel">Quitar del lote</button><button type="button" id="ecl">Cerrar</button></div><p class="note" style="margin:10px 0 0">Los cambios se guardan en la lista de pacientes. Descarga los resultados para conservarlos.</p>';
+  V4.forEach(function(vv){var n=$("en-"+vv.k),rg=$("er-"+vv.k),cur=x.p[vv.i];
+    if(cur!==null){n.value=cur;rg.value=Math.min(vv.max,cur)}
+    n.addEventListener("input",function(){x.p[vv.i]=num(n.value);if(x.p[vv.i]!==null)rg.value=Math.min(vv.max,x.p[vv.i]);edit(x)});
+    rg.addEventListener("input",function(){x.p[vv.i]=parseFloat(rg.value);n.value=rg.value;edit(x)})});
+  $("ehyp").addEventListener("click",function(){x.hy=x.hy===true?false:true;edit(x)});
+  $("edel").addEventListener("click",function(){
+    var k=RES.indexOf(x);R.splice(x.i-1,1);RES.splice(k,1);RES.forEach(function(y,j){y.i=j+1});SEL=null;buildEd();
+    if(!RES.length){$("lclr").click();return}
+    if(MAN)$("lman").textContent=manTxt();render(LAST,true)});
+  $("ecl").addEventListener("click",function(){select(x)});
+  stEd(x);
+}
+function edit(x){recomp(x);writeBack(x);stEd(x);if(MAN)$("lman").textContent=manTxt();render(LAST,true)}
+function stEd(x){
+  var b=okx(x),t=$("etag");t.className="pill "+(!b?"p-gray":hi(x)?"p-high":"p-low");t.textContent=!b?"Sin dato":hi(x)?"Alto riesgo":"Riesgo bajo";
+  $("ek").innerHTML=x.pr?'Score <b>'+x.s+'</b> de 7, logística <b>'+pct(x.pr.pl)+'</b>, red <b>'+pct(x.pr.pa)+'</b>':'Score <b>'+x.s+'</b> de 7. Completa los datos para ver las probabilidades.';
+  var hb=$("ehyp");hb.setAttribute("aria-pressed",x.hy===true);hb.querySelector("b").textContent=x.hy===null?"Sin dato":x.hy?"Sí (+3)":"No";
+  V4.forEach(function(vv){var n=x.p[vv.i],on=n!==null&&(vv.lo?n<=vv.cut:n>=vv.cut);$("ef-"+vv.k).classList.toggle("on",on);$("ef-"+vv.k).querySelector(".t span").textContent=vv.f+(on?", cruza (+1)":"")})}
+function setCrit(m,cut){CRIT={m:m,cut:cut};var s=$("cr");s.min=m==="sc"?1:5;s.max=m==="sc"?7:95;s.step=1;s.value=cut;$("cm").value=m;$("cv").textContent=m==="sc"?cut:cut+" %";
+  $("creset").textContent="Volver al corte del modelo (score ≥ 2)";if(RES.length)render(LAST,true)}
+$("cm").addEventListener("change",function(){setCrit($("cm").value,$("cm").value==="sc"?2:50)});
+$("cr").addEventListener("input",function(){setCrit(CRIT.m,+$("cr").value)});
+$("creset").addEventListener("click",function(){setCrit("sc",2)});
+$("lsort").addEventListener("change",function(){if(RES.length)render(LAST,true)});
 $("dl").addEventListener("click",function(){
-  var l=["paciente,hematocrito,plaquetas,leucocitos,alt,hipotension,puntaje,riesgo,datos_incompletos,resultado_real"];
-  RES.forEach(function(x){l.push([x.i].concat(x.p.map(function(v){return v===null?"":v}),[x.hy===null?"":x.hy?1:0,x.s,risk(x.s)[0],x.miss?1:0,x.o===null?"":x.o?1:0]).join(","))});
+  var l=["paciente,hematocrito,plaquetas,leucocitos,alt,hipotension,puntaje,riesgo,clasificacion,criterio,prob_logistica_pct,prob_red_neuronal_pct,datos_incompletos,resultado_real"];
+  RES.forEach(function(x){l.push([String(x.nm||x.i).replace(/[",\n]/g," ")].concat(x.p.map(function(v){return v===null?"":v}),[x.hy===null?"":x.hy?1:0,x.s,risk(x.s)[0],(okx(x)?(hi(x)?"alto":"bajo"):""),critTxt(),x.pr?(100*x.pr.pl).toFixed(1):"",x.pr?(100*x.pr.pa).toFixed(1):"",x.miss?1:0,x.o===null?"":x.o?1:0]).join(","))});
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+l.join("\n")],{type:"text/csv"}));a.download="resultados_score_dengue.csv";a.click();
 });
 
@@ -529,8 +814,8 @@ $("tpl").addEventListener("click",function(){
 });
 $("dlx").addEventListener("click",function(){
   if(!RES.length||typeof XLSX==="undefined")return;
-  var d=[["paciente","hematocrito","plaquetas","leucocitos","alt","hipotension","puntaje","riesgo","datos_incompletos","resultado_real"]];
-  RES.forEach(function(x){d.push([x.i].concat(x.p,[x.hy===null?"":x.hy?1:0,x.s,risk(x.s)[0],x.miss?1:0,x.o===null?"":x.o?1:0]))});
+  var d=[["paciente","hematocrito","plaquetas","leucocitos","alt","hipotension","puntaje","riesgo","clasificacion","criterio","prob_logistica_pct","prob_red_neuronal_pct","datos_incompletos","resultado_real"]];
+  RES.forEach(function(x){d.push([String(x.nm||x.i).replace(/[",\n]/g," ")].concat(x.p,[x.hy===null?"":x.hy?1:0,x.s,risk(x.s)[0],(okx(x)?(hi(x)?"alto":"bajo"):""),critTxt(),x.pr?(100*x.pr.pl).toFixed(1):"",x.pr?(100*x.pr.pa).toFixed(1):"",x.miss?1:0,x.o===null?"":x.o?1:0]))});
   var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d),"Resultados");XLSX.writeFile(wb,"resultados_score_dengue.xlsx");
 });
 (function(){ /* EDA con los datos reales */
@@ -549,6 +834,31 @@ $("dlx").addEventListener("click",function(){
     g+='<text x="0" y="'+(y+14)+'">'+b[0]+'</text><rect x="120" y="'+y+'" width="'+w+'" height="26" fill="'+b[2]+'"/><text x="'+(126+w)+'" y="'+(y+18)+'">'+b[1]+'</text>'});
   $("egrp").innerHTML=g;
 })();
+(function(){
+  var rows=parseCSV(DATA).slice(1).filter(function(r){return r.length>=6&&[1,2,3,4].every(function(i){return num(r[i])!==null})}),y=[],sc=[],pl=[],pa=[];
+  rows.forEach(function(r){var a=num(r[1]),b=num(r[2]),c=num(r[3]),d=num(r[4]),h=+(r[5]==="1"),fw=+(c>=7000),fa=+(d>=70),fp=+(b<=75000),fc=+(a>=42),p=probs(h,fw,fa,fp,fc);
+    y.push(r[0]==="1"?1:0);sc.push(h*3+fw+fa+fp+fc);pl.push(p.pl);pa.push(p.pa)});
+  $("mauc").innerHTML=[["Score (0 a 7)",sc],["Regresión logística",pl],["Red neuronal 5-4-1",pa]].map(function(m){return '<div><b>'+f(auc(m[1],y).toFixed(2))+'</b><span>AUC · '+m[0]+'</span></div>'}).join("");
+})();
+var MH=["paciente","hematocrito","plaquetas","leucocitos_max","alt","hipotension"];
+$("addb").addEventListener("click",function(){
+  var v=[nv("pcv"),nv("plt"),nv("wbc"),nv("alt")],m=$("addm");
+  if(v.some(function(x){return x===null})){m.textContent="Completa hematocrito, plaquetas, leucocitos y ALT para añadir al lote.";$("seel").hidden=true;return}
+  var prev=!MAN&&R.length>0;
+  if(!MAN)R=[];
+  var nm=$("pn").value.trim()||$("ph").value.trim()||"Paciente "+(R.length+1);
+  R.push([nm,v[0],v[1],v[2],v[3],$("hypo").checked?1:0]);
+  load([MH].concat(R),true);$("run").click();
+  m.textContent="Añadido. El lote tiene "+R.length+(R.length===1?" paciente.":" pacientes.")+(prev?" Se reemplazó la lista cargada antes.":"");
+  $("seel").hidden=false;
+});
+$("seel").addEventListener("click",function(){go("lote")});
+$("lclr").addEventListener("click",function(){
+  H=[];R=[];RES=[];MAN=false;$("mapbox").hidden=true;$("lres").hidden=true;$("lerr").textContent="";$("lman").textContent="";$("file").value="";$("addm").textContent="";$("seel").hidden=true;
+});
+var PRE=[{h:0,plt:180000,pcv:38,alt:35,wbc:5500},{h:0,plt:70000,pcv:44,alt:40,wbc:5000},{h:1,plt:40000,pcv:46,alt:120,wbc:9000}];
+document.querySelectorAll("[data-pre]").forEach(function(b){b.addEventListener("click",function(){
+  var e=PRE[b.dataset.pre];["pcv","plt","wbc","alt"].forEach(function(k){$(k).value=e[k]});$("hypo").checked=!!e.h;calc()})});
 /* gráficos del estudio */
 $("t4").innerHTML=T4.map(function(r){return '<tr'+(r[0]===2?' class="sel"':'')+'><td>≥ '+r[0]+'</td><td>'+f(r[1].toFixed(1))+' %</td><td>'+f(r[2].toFixed(1))+' %</td><td>'+f(r[3].toFixed(2))+'</td></tr>'}).join("");
 (function(){
